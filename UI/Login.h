@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QString>
+#include "GUIService.h"
 
 namespace Ui {
 class logIn;
@@ -14,6 +15,7 @@ class logIn : public QDialog
 
 public:
     explicit logIn(QWidget *parent = 0);
+    void setService(GUIService *service);
     ~logIn();
 
 private slots:
@@ -24,6 +26,7 @@ private slots:
 private:
     Ui::logIn *ui;
     QString pass;
+    GUIService *service;
 };
 
 #endif // LOGIN_H

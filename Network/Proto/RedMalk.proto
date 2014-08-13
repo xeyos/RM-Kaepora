@@ -1,0 +1,110 @@
+package rm;
+
+message VersionPackage{
+	required bytes system=1;
+	required bytes concreteVersion=2;
+	required bytes SO=3;
+}
+
+message Notice{
+	required bytes content=1;
+	required bytes type=2;
+	required bytes relevance=3;
+}
+
+message News{
+	repeated Notice notice = 1;
+}
+
+message Auth{
+	required bytes user=1;
+	required bytes password=2;
+	required bytes port=3;
+}
+
+message PersonalNew{
+	optional bytes content=1;
+	required bytes user=3;
+	required bytes userServer=5;
+	required bytes type=2;
+	optional bytes internalData=4;
+	optional bytes internalDataAux=6;
+	optional bytes response = 7;
+}
+
+message PersonalNews{
+	repeated PersonalNew personalNew = 1;
+}
+
+message Invitation{
+	required bytes user = 1;
+	required bytes server = 5;
+	required bytes destinatary = 2;
+	required bytes msg = 3;
+	required bytes key = 4;
+}
+
+message serverInvitationVerif{
+	required bytes userInvited = 1;
+	required bytes userInviting = 2;
+	required bytes server = 4;
+	required bytes key = 3;
+	optional bytes response = 5;
+}
+
+message UserData{
+	required bytes user=1;
+	required bytes ip=2;
+	required bytes port=3;
+	optional bytes key = 5;
+	optional bytes date=4 [default = "NONE"];	
+}
+
+message ExternalUserData{
+	required bytes user=1;
+	required bytes server=2;
+	required bytes key=3;
+}
+
+message UserDataBlock{
+	repeated UserData localFriend=1;
+	repeated ExternalUserData externalFriend=2;
+}
+
+message User{
+	required bytes user = 1;
+	required bytes server = 2;
+	optional bytes ip = 3;
+	optional bytes port = 4;
+}
+
+message ServerStatus{
+	required bytes registeringStatus=1;
+	required bytes generalStatus=2;
+	required bytes avaliability=3;
+}
+
+message ServerResponse{
+	required bytes code=1;
+	optional bytes description=2;
+}
+
+message RegisteringData{
+	required bytes uname=1;
+	required bytes email=2;
+	required bytes password=3;
+}
+
+message chatAuth{
+	required bytes user=1;
+	required bytes server=2;
+ 	optional bytes key=3;
+	optional bytes keyAlt=4;
+}
+
+message chatTextMsg{
+	required bytes user=1;
+	required bytes msg=2;
+}
+
+

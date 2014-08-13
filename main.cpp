@@ -3,6 +3,7 @@
 #include <pqxx/pqxx>
 #include "UI/Login.h"
 #include "Network/TcpServer.h"
+#include "GUIService.h"
 
 using namespace std;
 using namespace pqxx;
@@ -10,26 +11,13 @@ using namespace pqxx;
 
 int main(int argc, char** argv) {
 QApplication a (argc, argv);
-logIn lgw;
-lgw.show();
-/*
-connection C("dbname=Kaepora user=Kaepora password=Gaebora  hostaddr=127.0.0.1 port=5432");
-
-string tableName("Kaepora");
-
-if (C.is_open()) {
-
-cout << "We are connected to" << C.dbname() << endl;
-
-} else {
-
-cout << "We are not connected!" << endl;
-
-return 0;
-
-}*/
+GUIService service;
 TcpServer server;
-server.startServer();
+service.setServer(&server);
+logIn lgw;
+lgw.setService(&service);
+lgw.show();
+
 /**
 work Q(C);
 

@@ -1,0 +1,29 @@
+package navi;
+
+
+message OptionsSave{
+	required int32 port =1;
+	optional string languaje =2;
+}
+
+message FriendData{
+	optional bytes port =1 [default = "NONE"];
+	optional bytes ip = 2 [default = "NONE"];
+	optional bytes date = 3 [default = "NONE"];
+	required bytes key = 4;
+	repeated FriendList commonFriends = 5;
+}
+
+message Friend{
+	required string uname = 5;
+	required string server = 8;
+	optional string identifier = 6 [default = ""];
+	optional string avatar = 7 [default = ""];
+	optional int32 port =1 [default = 0];
+	optional string ip = 2 [default = "NONE"];
+	required string key = 4;
+}
+
+message FriendList{
+	repeated FriendData friend =1;
+}

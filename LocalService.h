@@ -1,10 +1,16 @@
 #ifndef LOCALSERVICE_H
 #define LOCALSERVICE_H
-
-class localService
+#include <QString>
+class LocalService
 {
 public:
-    localService();
+    LocalService();
+    void setPassword(QString p);
+    QString getServerName();
+
+private:
+    static QString pass;
+    static QString server;
 };
 
 #endif // LOCALSERVICE_H

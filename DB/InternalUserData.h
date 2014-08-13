@@ -1,10 +1,15 @@
-#ifndef INTERNALDATA_H
-#define INTERNALDATA_H
+#ifndef INTERNALUSERDATA_H
+#define INTERNALUSERDATA_H
+#include <string>
 
-class InternalData
+class InternalUserData
 {
 public:
-    InternalData();
+    InternalUserData();
+
+public:
+    std::string ip;
+    int port;
 };
 
-#endif // INTERNALDATA_H
+#endif // INTERNALUSERDATA_H

@@ -1,5 +1,5 @@
-#include "InternalData.h"
+#include "InternalUserData.h"
 
-InternalData::InternalData()
+InternalUserData::InternalUserData()
 {
 }

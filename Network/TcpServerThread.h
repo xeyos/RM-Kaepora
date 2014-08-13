@@ -3,30 +3,42 @@
 #define TCPSERVERTHREAD_H
 
 #include <QObject>
-#include <QSslSocket>
+#include <QTcpSocket>
 #include <QDebug>
+#include <QString>
 #include "Security/SecurityData.h"
 #include "Security/CustomRsa.h"
 #include "Security/BlowFish.h"
+#include "TcpRmStatus.h"
+#include "TcpRmClient.h"
 
 class TcpServerThread : public QObject
 {
     Q_OBJECT
 public:
-    explicit TcpServerThread(qintptr ID, RsaKeys *k, CustomRsa *rsa);
+    explicit TcpServerThread(qintptr ID, RsaKeys *k, CustomRsa *rsa, int serverMode);
+    void sendExternalMsg(QByteArray byteArray);
+    int getServerMode();
+    void changeState(int type, QByteArray data, QString destinatary);
+    void changeState(int type, QByteArray data);
+    QString getClientIp();
+    void closeConnection();
+    void blockThread(bool value);
 
 private:
-    std::string obtenerMensaje();
+    std::string getNetworkString();
+    void sendMsg(std::string msg);
 
 signals:
      void error(QTcpSocket::SocketError socketerror);
+     void clientThreadNeeded(int type, QByteArray data, QString destinatary);
+     void clientThreadNeeded(int type, QByteArray data);
      void finished();
 
 public slots:
      void readyRead();
      void disconnected();
      void work();
-     void sendMsg(std::string msg);
 
 private:
     QTcpSocket *socket;
@@ -35,8 +47,9 @@ private:
     BlowFishKey bfKey;
     CustomRsa *crsa;
     BlowFish *bf;
-    QString bfText;
-    int state;
+    int state, serverMode;
+    TcpRmStatus *rm;
+    bool blocked;
 };
 
 #endif // TCPSERVERTHREAD_H

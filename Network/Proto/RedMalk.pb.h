@@ -39,8 +39,17 @@ class News;
 class Auth;
 class PersonalNew;
 class PersonalNews;
+class Invitation;
+class serverInvitationVerif;
 class UserData;
+class ExternalUserData;
 class UserDataBlock;
+class User;
+class ServerStatus;
+class ServerResponse;
+class RegisteringData;
+class chatAuth;
+class chatTextMsg;
 
 // ===================================================================
 
@@ -215,38 +224,38 @@ class Notice : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string content = 1;
+  // required bytes content = 1;
   inline bool has_content() const;
   inline void clear_content();
   static const int kContentFieldNumber = 1;
   inline const ::std::string& content() const;
   inline void set_content(const ::std::string& value);
   inline void set_content(const char* value);
-  inline void set_content(const char* value, size_t size);
+  inline void set_content(const void* value, size_t size);
   inline ::std::string* mutable_content();
   inline ::std::string* release_content();
   inline void set_allocated_content(::std::string* content);
 
-  // required string type = 2;
+  // required bytes type = 2;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 2;
   inline const ::std::string& type() const;
   inline void set_type(const ::std::string& value);
   inline void set_type(const char* value);
-  inline void set_type(const char* value, size_t size);
+  inline void set_type(const void* value, size_t size);
   inline ::std::string* mutable_type();
   inline ::std::string* release_type();
   inline void set_allocated_type(::std::string* type);
 
-  // required string relevance = 3;
+  // required bytes relevance = 3;
   inline bool has_relevance() const;
   inline void clear_relevance();
   static const int kRelevanceFieldNumber = 3;
   inline const ::std::string& relevance() const;
   inline void set_relevance(const ::std::string& value);
   inline void set_relevance(const char* value);
-  inline void set_relevance(const char* value, size_t size);
+  inline void set_relevance(const void* value, size_t size);
   inline ::std::string* mutable_relevance();
   inline ::std::string* release_relevance();
   inline void set_allocated_relevance(::std::string* relevance);
@@ -417,36 +426,41 @@ class Auth : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string user = 1;
+  // required bytes user = 1;
   inline bool has_user() const;
   inline void clear_user();
   static const int kUserFieldNumber = 1;
   inline const ::std::string& user() const;
   inline void set_user(const ::std::string& value);
   inline void set_user(const char* value);
-  inline void set_user(const char* value, size_t size);
+  inline void set_user(const void* value, size_t size);
   inline ::std::string* mutable_user();
   inline ::std::string* release_user();
   inline void set_allocated_user(::std::string* user);
 
-  // required string password = 2;
+  // required bytes password = 2;
   inline bool has_password() const;
   inline void clear_password();
   static const int kPasswordFieldNumber = 2;
   inline const ::std::string& password() const;
   inline void set_password(const ::std::string& value);
   inline void set_password(const char* value);
-  inline void set_password(const char* value, size_t size);
+  inline void set_password(const void* value, size_t size);
   inline ::std::string* mutable_password();
   inline ::std::string* release_password();
   inline void set_allocated_password(::std::string* password);
 
-  // required int32 port = 3;
+  // required bytes port = 3;
   inline bool has_port() const;
   inline void clear_port();
   static const int kPortFieldNumber = 3;
-  inline ::google::protobuf::int32 port() const;
-  inline void set_port(::google::protobuf::int32 value);
+  inline const ::std::string& port() const;
+  inline void set_port(const ::std::string& value);
+  inline void set_port(const char* value);
+  inline void set_port(const void* value, size_t size);
+  inline ::std::string* mutable_port();
+  inline ::std::string* release_port();
+  inline void set_allocated_port(::std::string* port);
 
   // @@protoc_insertion_point(class_scope:rm.Auth)
  private:
@@ -461,7 +475,7 @@ class Auth : public ::google::protobuf::Message {
 
   ::std::string* user_;
   ::std::string* password_;
-  ::google::protobuf::int32 port_;
+  ::std::string* port_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -529,53 +543,89 @@ class PersonalNew : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string content = 1;
+  // optional bytes content = 1;
   inline bool has_content() const;
   inline void clear_content();
   static const int kContentFieldNumber = 1;
   inline const ::std::string& content() const;
   inline void set_content(const ::std::string& value);
   inline void set_content(const char* value);
-  inline void set_content(const char* value, size_t size);
+  inline void set_content(const void* value, size_t size);
   inline ::std::string* mutable_content();
   inline ::std::string* release_content();
   inline void set_allocated_content(::std::string* content);
 
-  // required string user = 4;
+  // required bytes user = 3;
   inline bool has_user() const;
   inline void clear_user();
-  static const int kUserFieldNumber = 4;
+  static const int kUserFieldNumber = 3;
   inline const ::std::string& user() const;
   inline void set_user(const ::std::string& value);
   inline void set_user(const char* value);
-  inline void set_user(const char* value, size_t size);
+  inline void set_user(const void* value, size_t size);
   inline ::std::string* mutable_user();
   inline ::std::string* release_user();
   inline void set_allocated_user(::std::string* user);
 
-  // required string type = 2;
+  // required bytes userServer = 5;
+  inline bool has_userserver() const;
+  inline void clear_userserver();
+  static const int kUserServerFieldNumber = 5;
+  inline const ::std::string& userserver() const;
+  inline void set_userserver(const ::std::string& value);
+  inline void set_userserver(const char* value);
+  inline void set_userserver(const void* value, size_t size);
+  inline ::std::string* mutable_userserver();
+  inline ::std::string* release_userserver();
+  inline void set_allocated_userserver(::std::string* userserver);
+
+  // required bytes type = 2;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 2;
   inline const ::std::string& type() const;
   inline void set_type(const ::std::string& value);
   inline void set_type(const char* value);
-  inline void set_type(const char* value, size_t size);
+  inline void set_type(const void* value, size_t size);
   inline ::std::string* mutable_type();
   inline ::std::string* release_type();
   inline void set_allocated_type(::std::string* type);
 
-  // required string relevance = 3;
-  inline bool has_relevance() const;
-  inline void clear_relevance();
-  static const int kRelevanceFieldNumber = 3;
-  inline const ::std::string& relevance() const;
-  inline void set_relevance(const ::std::string& value);
-  inline void set_relevance(const char* value);
-  inline void set_relevance(const char* value, size_t size);
-  inline ::std::string* mutable_relevance();
-  inline ::std::string* release_relevance();
-  inline void set_allocated_relevance(::std::string* relevance);
+  // optional bytes internalData = 4;
+  inline bool has_internaldata() const;
+  inline void clear_internaldata();
+  static const int kInternalDataFieldNumber = 4;
+  inline const ::std::string& internaldata() const;
+  inline void set_internaldata(const ::std::string& value);
+  inline void set_internaldata(const char* value);
+  inline void set_internaldata(const void* value, size_t size);
+  inline ::std::string* mutable_internaldata();
+  inline ::std::string* release_internaldata();
+  inline void set_allocated_internaldata(::std::string* internaldata);
+
+  // optional bytes internalDataAux = 6;
+  inline bool has_internaldataaux() const;
+  inline void clear_internaldataaux();
+  static const int kInternalDataAuxFieldNumber = 6;
+  inline const ::std::string& internaldataaux() const;
+  inline void set_internaldataaux(const ::std::string& value);
+  inline void set_internaldataaux(const char* value);
+  inline void set_internaldataaux(const void* value, size_t size);
+  inline ::std::string* mutable_internaldataaux();
+  inline ::std::string* release_internaldataaux();
+  inline void set_allocated_internaldataaux(::std::string* internaldataaux);
+
+  // optional bytes response = 7;
+  inline bool has_response() const;
+  inline void clear_response();
+  static const int kResponseFieldNumber = 7;
+  inline const ::std::string& response() const;
+  inline void set_response(const ::std::string& value);
+  inline void set_response(const char* value);
+  inline void set_response(const void* value, size_t size);
+  inline ::std::string* mutable_response();
+  inline ::std::string* release_response();
+  inline void set_allocated_response(::std::string* response);
 
   // @@protoc_insertion_point(class_scope:rm.PersonalNew)
  private:
@@ -583,20 +633,29 @@ class PersonalNew : public ::google::protobuf::Message {
   inline void clear_has_content();
   inline void set_has_user();
   inline void clear_has_user();
+  inline void set_has_userserver();
+  inline void clear_has_userserver();
   inline void set_has_type();
   inline void clear_has_type();
-  inline void set_has_relevance();
-  inline void clear_has_relevance();
+  inline void set_has_internaldata();
+  inline void clear_has_internaldata();
+  inline void set_has_internaldataaux();
+  inline void clear_has_internaldataaux();
+  inline void set_has_response();
+  inline void clear_has_response();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* content_;
   ::std::string* user_;
+  ::std::string* userserver_;
   ::std::string* type_;
-  ::std::string* relevance_;
+  ::std::string* internaldata_;
+  ::std::string* internaldataaux_;
+  ::std::string* response_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
   friend void  protobuf_AddDesc_RedMalk_2eproto();
   friend void protobuf_AssignDesc_RedMalk_2eproto();
@@ -692,6 +751,300 @@ class PersonalNews : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class Invitation : public ::google::protobuf::Message {
+ public:
+  Invitation();
+  virtual ~Invitation();
+
+  Invitation(const Invitation& from);
+
+  inline Invitation& operator=(const Invitation& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Invitation& default_instance();
+
+  void Swap(Invitation* other);
+
+  // implements Message ----------------------------------------------
+
+  Invitation* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Invitation& from);
+  void MergeFrom(const Invitation& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bytes user = 1;
+  inline bool has_user() const;
+  inline void clear_user();
+  static const int kUserFieldNumber = 1;
+  inline const ::std::string& user() const;
+  inline void set_user(const ::std::string& value);
+  inline void set_user(const char* value);
+  inline void set_user(const void* value, size_t size);
+  inline ::std::string* mutable_user();
+  inline ::std::string* release_user();
+  inline void set_allocated_user(::std::string* user);
+
+  // required bytes server = 5;
+  inline bool has_server() const;
+  inline void clear_server();
+  static const int kServerFieldNumber = 5;
+  inline const ::std::string& server() const;
+  inline void set_server(const ::std::string& value);
+  inline void set_server(const char* value);
+  inline void set_server(const void* value, size_t size);
+  inline ::std::string* mutable_server();
+  inline ::std::string* release_server();
+  inline void set_allocated_server(::std::string* server);
+
+  // required bytes destinatary = 2;
+  inline bool has_destinatary() const;
+  inline void clear_destinatary();
+  static const int kDestinataryFieldNumber = 2;
+  inline const ::std::string& destinatary() const;
+  inline void set_destinatary(const ::std::string& value);
+  inline void set_destinatary(const char* value);
+  inline void set_destinatary(const void* value, size_t size);
+  inline ::std::string* mutable_destinatary();
+  inline ::std::string* release_destinatary();
+  inline void set_allocated_destinatary(::std::string* destinatary);
+
+  // required bytes msg = 3;
+  inline bool has_msg() const;
+  inline void clear_msg();
+  static const int kMsgFieldNumber = 3;
+  inline const ::std::string& msg() const;
+  inline void set_msg(const ::std::string& value);
+  inline void set_msg(const char* value);
+  inline void set_msg(const void* value, size_t size);
+  inline ::std::string* mutable_msg();
+  inline ::std::string* release_msg();
+  inline void set_allocated_msg(::std::string* msg);
+
+  // required bytes key = 4;
+  inline bool has_key() const;
+  inline void clear_key();
+  static const int kKeyFieldNumber = 4;
+  inline const ::std::string& key() const;
+  inline void set_key(const ::std::string& value);
+  inline void set_key(const char* value);
+  inline void set_key(const void* value, size_t size);
+  inline ::std::string* mutable_key();
+  inline ::std::string* release_key();
+  inline void set_allocated_key(::std::string* key);
+
+  // @@protoc_insertion_point(class_scope:rm.Invitation)
+ private:
+  inline void set_has_user();
+  inline void clear_has_user();
+  inline void set_has_server();
+  inline void clear_has_server();
+  inline void set_has_destinatary();
+  inline void clear_has_destinatary();
+  inline void set_has_msg();
+  inline void clear_has_msg();
+  inline void set_has_key();
+  inline void clear_has_key();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* user_;
+  ::std::string* server_;
+  ::std::string* destinatary_;
+  ::std::string* msg_;
+  ::std::string* key_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+
+  friend void  protobuf_AddDesc_RedMalk_2eproto();
+  friend void protobuf_AssignDesc_RedMalk_2eproto();
+  friend void protobuf_ShutdownFile_RedMalk_2eproto();
+
+  void InitAsDefaultInstance();
+  static Invitation* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class serverInvitationVerif : public ::google::protobuf::Message {
+ public:
+  serverInvitationVerif();
+  virtual ~serverInvitationVerif();
+
+  serverInvitationVerif(const serverInvitationVerif& from);
+
+  inline serverInvitationVerif& operator=(const serverInvitationVerif& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const serverInvitationVerif& default_instance();
+
+  void Swap(serverInvitationVerif* other);
+
+  // implements Message ----------------------------------------------
+
+  serverInvitationVerif* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const serverInvitationVerif& from);
+  void MergeFrom(const serverInvitationVerif& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bytes userInvited = 1;
+  inline bool has_userinvited() const;
+  inline void clear_userinvited();
+  static const int kUserInvitedFieldNumber = 1;
+  inline const ::std::string& userinvited() const;
+  inline void set_userinvited(const ::std::string& value);
+  inline void set_userinvited(const char* value);
+  inline void set_userinvited(const void* value, size_t size);
+  inline ::std::string* mutable_userinvited();
+  inline ::std::string* release_userinvited();
+  inline void set_allocated_userinvited(::std::string* userinvited);
+
+  // required bytes userInviting = 2;
+  inline bool has_userinviting() const;
+  inline void clear_userinviting();
+  static const int kUserInvitingFieldNumber = 2;
+  inline const ::std::string& userinviting() const;
+  inline void set_userinviting(const ::std::string& value);
+  inline void set_userinviting(const char* value);
+  inline void set_userinviting(const void* value, size_t size);
+  inline ::std::string* mutable_userinviting();
+  inline ::std::string* release_userinviting();
+  inline void set_allocated_userinviting(::std::string* userinviting);
+
+  // required bytes server = 4;
+  inline bool has_server() const;
+  inline void clear_server();
+  static const int kServerFieldNumber = 4;
+  inline const ::std::string& server() const;
+  inline void set_server(const ::std::string& value);
+  inline void set_server(const char* value);
+  inline void set_server(const void* value, size_t size);
+  inline ::std::string* mutable_server();
+  inline ::std::string* release_server();
+  inline void set_allocated_server(::std::string* server);
+
+  // required bytes key = 3;
+  inline bool has_key() const;
+  inline void clear_key();
+  static const int kKeyFieldNumber = 3;
+  inline const ::std::string& key() const;
+  inline void set_key(const ::std::string& value);
+  inline void set_key(const char* value);
+  inline void set_key(const void* value, size_t size);
+  inline ::std::string* mutable_key();
+  inline ::std::string* release_key();
+  inline void set_allocated_key(::std::string* key);
+
+  // optional bytes response = 5;
+  inline bool has_response() const;
+  inline void clear_response();
+  static const int kResponseFieldNumber = 5;
+  inline const ::std::string& response() const;
+  inline void set_response(const ::std::string& value);
+  inline void set_response(const char* value);
+  inline void set_response(const void* value, size_t size);
+  inline ::std::string* mutable_response();
+  inline ::std::string* release_response();
+  inline void set_allocated_response(::std::string* response);
+
+  // @@protoc_insertion_point(class_scope:rm.serverInvitationVerif)
+ private:
+  inline void set_has_userinvited();
+  inline void clear_has_userinvited();
+  inline void set_has_userinviting();
+  inline void clear_has_userinviting();
+  inline void set_has_server();
+  inline void clear_has_server();
+  inline void set_has_key();
+  inline void clear_has_key();
+  inline void set_has_response();
+  inline void clear_has_response();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* userinvited_;
+  ::std::string* userinviting_;
+  ::std::string* server_;
+  ::std::string* key_;
+  ::std::string* response_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+
+  friend void  protobuf_AddDesc_RedMalk_2eproto();
+  friend void protobuf_AssignDesc_RedMalk_2eproto();
+  friend void protobuf_ShutdownFile_RedMalk_2eproto();
+
+  void InitAsDefaultInstance();
+  static serverInvitationVerif* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class UserData : public ::google::protobuf::Message {
  public:
   UserData();
@@ -746,48 +1099,65 @@ class UserData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string user = 1;
+  // required bytes user = 1;
   inline bool has_user() const;
   inline void clear_user();
   static const int kUserFieldNumber = 1;
   inline const ::std::string& user() const;
   inline void set_user(const ::std::string& value);
   inline void set_user(const char* value);
-  inline void set_user(const char* value, size_t size);
+  inline void set_user(const void* value, size_t size);
   inline ::std::string* mutable_user();
   inline ::std::string* release_user();
   inline void set_allocated_user(::std::string* user);
 
-  // required string ip = 2;
+  // required bytes ip = 2;
   inline bool has_ip() const;
   inline void clear_ip();
   static const int kIpFieldNumber = 2;
   inline const ::std::string& ip() const;
   inline void set_ip(const ::std::string& value);
   inline void set_ip(const char* value);
-  inline void set_ip(const char* value, size_t size);
+  inline void set_ip(const void* value, size_t size);
   inline ::std::string* mutable_ip();
   inline ::std::string* release_ip();
   inline void set_allocated_ip(::std::string* ip);
 
-  // required int32 port = 3;
+  // required bytes port = 3;
   inline bool has_port() const;
   inline void clear_port();
   static const int kPortFieldNumber = 3;
-  inline ::google::protobuf::int32 port() const;
-  inline void set_port(::google::protobuf::int32 value);
+  inline const ::std::string& port() const;
+  inline void set_port(const ::std::string& value);
+  inline void set_port(const char* value);
+  inline void set_port(const void* value, size_t size);
+  inline ::std::string* mutable_port();
+  inline ::std::string* release_port();
+  inline void set_allocated_port(::std::string* port);
 
-  // optional string code = 4 [default = "NONE"];
-  inline bool has_code() const;
-  inline void clear_code();
-  static const int kCodeFieldNumber = 4;
-  inline const ::std::string& code() const;
-  inline void set_code(const ::std::string& value);
-  inline void set_code(const char* value);
-  inline void set_code(const char* value, size_t size);
-  inline ::std::string* mutable_code();
-  inline ::std::string* release_code();
-  inline void set_allocated_code(::std::string* code);
+  // optional bytes key = 5;
+  inline bool has_key() const;
+  inline void clear_key();
+  static const int kKeyFieldNumber = 5;
+  inline const ::std::string& key() const;
+  inline void set_key(const ::std::string& value);
+  inline void set_key(const char* value);
+  inline void set_key(const void* value, size_t size);
+  inline ::std::string* mutable_key();
+  inline ::std::string* release_key();
+  inline void set_allocated_key(::std::string* key);
+
+  // optional bytes date = 4 [default = "NONE"];
+  inline bool has_date() const;
+  inline void clear_date();
+  static const int kDateFieldNumber = 4;
+  inline const ::std::string& date() const;
+  inline void set_date(const ::std::string& value);
+  inline void set_date(const char* value);
+  inline void set_date(const void* value, size_t size);
+  inline ::std::string* mutable_date();
+  inline ::std::string* release_date();
+  inline void set_allocated_date(::std::string* date);
 
   // @@protoc_insertion_point(class_scope:rm.UserData)
  private:
@@ -797,19 +1167,22 @@ class UserData : public ::google::protobuf::Message {
   inline void clear_has_ip();
   inline void set_has_port();
   inline void clear_has_port();
-  inline void set_has_code();
-  inline void clear_has_code();
+  inline void set_has_key();
+  inline void clear_has_key();
+  inline void set_has_date();
+  inline void clear_has_date();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* user_;
   ::std::string* ip_;
-  ::std::string* code_;
-  static ::std::string* _default_code_;
-  ::google::protobuf::int32 port_;
+  ::std::string* port_;
+  ::std::string* key_;
+  ::std::string* date_;
+  static ::std::string* _default_date_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void  protobuf_AddDesc_RedMalk_2eproto();
   friend void protobuf_AssignDesc_RedMalk_2eproto();
@@ -817,6 +1190,123 @@ class UserData : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static UserData* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ExternalUserData : public ::google::protobuf::Message {
+ public:
+  ExternalUserData();
+  virtual ~ExternalUserData();
+
+  ExternalUserData(const ExternalUserData& from);
+
+  inline ExternalUserData& operator=(const ExternalUserData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ExternalUserData& default_instance();
+
+  void Swap(ExternalUserData* other);
+
+  // implements Message ----------------------------------------------
+
+  ExternalUserData* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ExternalUserData& from);
+  void MergeFrom(const ExternalUserData& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bytes user = 1;
+  inline bool has_user() const;
+  inline void clear_user();
+  static const int kUserFieldNumber = 1;
+  inline const ::std::string& user() const;
+  inline void set_user(const ::std::string& value);
+  inline void set_user(const char* value);
+  inline void set_user(const void* value, size_t size);
+  inline ::std::string* mutable_user();
+  inline ::std::string* release_user();
+  inline void set_allocated_user(::std::string* user);
+
+  // required bytes server = 2;
+  inline bool has_server() const;
+  inline void clear_server();
+  static const int kServerFieldNumber = 2;
+  inline const ::std::string& server() const;
+  inline void set_server(const ::std::string& value);
+  inline void set_server(const char* value);
+  inline void set_server(const void* value, size_t size);
+  inline ::std::string* mutable_server();
+  inline ::std::string* release_server();
+  inline void set_allocated_server(::std::string* server);
+
+  // required bytes key = 3;
+  inline bool has_key() const;
+  inline void clear_key();
+  static const int kKeyFieldNumber = 3;
+  inline const ::std::string& key() const;
+  inline void set_key(const ::std::string& value);
+  inline void set_key(const char* value);
+  inline void set_key(const void* value, size_t size);
+  inline ::std::string* mutable_key();
+  inline ::std::string* release_key();
+  inline void set_allocated_key(::std::string* key);
+
+  // @@protoc_insertion_point(class_scope:rm.ExternalUserData)
+ private:
+  inline void set_has_user();
+  inline void clear_has_user();
+  inline void set_has_server();
+  inline void clear_has_server();
+  inline void set_has_key();
+  inline void clear_has_key();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* user_;
+  ::std::string* server_;
+  ::std::string* key_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_RedMalk_2eproto();
+  friend void protobuf_AssignDesc_RedMalk_2eproto();
+  friend void protobuf_ShutdownFile_RedMalk_2eproto();
+
+  void InitAsDefaultInstance();
+  static ExternalUserData* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -874,27 +1364,40 @@ class UserDataBlock : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // repeated .rm.UserData friend = 1;
-  inline int friend__size() const;
-  inline void clear_friend_();
-  static const int kFriendFieldNumber = 1;
-  inline const ::rm::UserData& friend_(int index) const;
-  inline ::rm::UserData* mutable_friend_(int index);
-  inline ::rm::UserData* add_friend_();
+  // repeated .rm.UserData localFriend = 1;
+  inline int localfriend_size() const;
+  inline void clear_localfriend();
+  static const int kLocalFriendFieldNumber = 1;
+  inline const ::rm::UserData& localfriend(int index) const;
+  inline ::rm::UserData* mutable_localfriend(int index);
+  inline ::rm::UserData* add_localfriend();
   inline const ::google::protobuf::RepeatedPtrField< ::rm::UserData >&
-      friend_() const;
+      localfriend() const;
   inline ::google::protobuf::RepeatedPtrField< ::rm::UserData >*
-      mutable_friend_();
+      mutable_localfriend();
+
+  // repeated .rm.ExternalUserData externalFriend = 2;
+  inline int externalfriend_size() const;
+  inline void clear_externalfriend();
+  static const int kExternalFriendFieldNumber = 2;
+  inline const ::rm::ExternalUserData& externalfriend(int index) const;
+  inline ::rm::ExternalUserData* mutable_externalfriend(int index);
+  inline ::rm::ExternalUserData* add_externalfriend();
+  inline const ::google::protobuf::RepeatedPtrField< ::rm::ExternalUserData >&
+      externalfriend() const;
+  inline ::google::protobuf::RepeatedPtrField< ::rm::ExternalUserData >*
+      mutable_externalfriend();
 
   // @@protoc_insertion_point(class_scope:rm.UserDataBlock)
  private:
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::RepeatedPtrField< ::rm::UserData > friend__;
+  ::google::protobuf::RepeatedPtrField< ::rm::UserData > localfriend_;
+  ::google::protobuf::RepeatedPtrField< ::rm::ExternalUserData > externalfriend_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_RedMalk_2eproto();
   friend void protobuf_AssignDesc_RedMalk_2eproto();
@@ -902,6 +1405,708 @@ class UserDataBlock : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static UserDataBlock* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class User : public ::google::protobuf::Message {
+ public:
+  User();
+  virtual ~User();
+
+  User(const User& from);
+
+  inline User& operator=(const User& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const User& default_instance();
+
+  void Swap(User* other);
+
+  // implements Message ----------------------------------------------
+
+  User* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const User& from);
+  void MergeFrom(const User& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bytes user = 1;
+  inline bool has_user() const;
+  inline void clear_user();
+  static const int kUserFieldNumber = 1;
+  inline const ::std::string& user() const;
+  inline void set_user(const ::std::string& value);
+  inline void set_user(const char* value);
+  inline void set_user(const void* value, size_t size);
+  inline ::std::string* mutable_user();
+  inline ::std::string* release_user();
+  inline void set_allocated_user(::std::string* user);
+
+  // required bytes server = 2;
+  inline bool has_server() const;
+  inline void clear_server();
+  static const int kServerFieldNumber = 2;
+  inline const ::std::string& server() const;
+  inline void set_server(const ::std::string& value);
+  inline void set_server(const char* value);
+  inline void set_server(const void* value, size_t size);
+  inline ::std::string* mutable_server();
+  inline ::std::string* release_server();
+  inline void set_allocated_server(::std::string* server);
+
+  // optional bytes ip = 3;
+  inline bool has_ip() const;
+  inline void clear_ip();
+  static const int kIpFieldNumber = 3;
+  inline const ::std::string& ip() const;
+  inline void set_ip(const ::std::string& value);
+  inline void set_ip(const char* value);
+  inline void set_ip(const void* value, size_t size);
+  inline ::std::string* mutable_ip();
+  inline ::std::string* release_ip();
+  inline void set_allocated_ip(::std::string* ip);
+
+  // optional bytes port = 4;
+  inline bool has_port() const;
+  inline void clear_port();
+  static const int kPortFieldNumber = 4;
+  inline const ::std::string& port() const;
+  inline void set_port(const ::std::string& value);
+  inline void set_port(const char* value);
+  inline void set_port(const void* value, size_t size);
+  inline ::std::string* mutable_port();
+  inline ::std::string* release_port();
+  inline void set_allocated_port(::std::string* port);
+
+  // @@protoc_insertion_point(class_scope:rm.User)
+ private:
+  inline void set_has_user();
+  inline void clear_has_user();
+  inline void set_has_server();
+  inline void clear_has_server();
+  inline void set_has_ip();
+  inline void clear_has_ip();
+  inline void set_has_port();
+  inline void clear_has_port();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* user_;
+  ::std::string* server_;
+  ::std::string* ip_;
+  ::std::string* port_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+
+  friend void  protobuf_AddDesc_RedMalk_2eproto();
+  friend void protobuf_AssignDesc_RedMalk_2eproto();
+  friend void protobuf_ShutdownFile_RedMalk_2eproto();
+
+  void InitAsDefaultInstance();
+  static User* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ServerStatus : public ::google::protobuf::Message {
+ public:
+  ServerStatus();
+  virtual ~ServerStatus();
+
+  ServerStatus(const ServerStatus& from);
+
+  inline ServerStatus& operator=(const ServerStatus& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ServerStatus& default_instance();
+
+  void Swap(ServerStatus* other);
+
+  // implements Message ----------------------------------------------
+
+  ServerStatus* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ServerStatus& from);
+  void MergeFrom(const ServerStatus& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bytes registeringStatus = 1;
+  inline bool has_registeringstatus() const;
+  inline void clear_registeringstatus();
+  static const int kRegisteringStatusFieldNumber = 1;
+  inline const ::std::string& registeringstatus() const;
+  inline void set_registeringstatus(const ::std::string& value);
+  inline void set_registeringstatus(const char* value);
+  inline void set_registeringstatus(const void* value, size_t size);
+  inline ::std::string* mutable_registeringstatus();
+  inline ::std::string* release_registeringstatus();
+  inline void set_allocated_registeringstatus(::std::string* registeringstatus);
+
+  // required bytes generalStatus = 2;
+  inline bool has_generalstatus() const;
+  inline void clear_generalstatus();
+  static const int kGeneralStatusFieldNumber = 2;
+  inline const ::std::string& generalstatus() const;
+  inline void set_generalstatus(const ::std::string& value);
+  inline void set_generalstatus(const char* value);
+  inline void set_generalstatus(const void* value, size_t size);
+  inline ::std::string* mutable_generalstatus();
+  inline ::std::string* release_generalstatus();
+  inline void set_allocated_generalstatus(::std::string* generalstatus);
+
+  // required bytes avaliability = 3;
+  inline bool has_avaliability() const;
+  inline void clear_avaliability();
+  static const int kAvaliabilityFieldNumber = 3;
+  inline const ::std::string& avaliability() const;
+  inline void set_avaliability(const ::std::string& value);
+  inline void set_avaliability(const char* value);
+  inline void set_avaliability(const void* value, size_t size);
+  inline ::std::string* mutable_avaliability();
+  inline ::std::string* release_avaliability();
+  inline void set_allocated_avaliability(::std::string* avaliability);
+
+  // @@protoc_insertion_point(class_scope:rm.ServerStatus)
+ private:
+  inline void set_has_registeringstatus();
+  inline void clear_has_registeringstatus();
+  inline void set_has_generalstatus();
+  inline void clear_has_generalstatus();
+  inline void set_has_avaliability();
+  inline void clear_has_avaliability();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* registeringstatus_;
+  ::std::string* generalstatus_;
+  ::std::string* avaliability_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_RedMalk_2eproto();
+  friend void protobuf_AssignDesc_RedMalk_2eproto();
+  friend void protobuf_ShutdownFile_RedMalk_2eproto();
+
+  void InitAsDefaultInstance();
+  static ServerStatus* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class ServerResponse : public ::google::protobuf::Message {
+ public:
+  ServerResponse();
+  virtual ~ServerResponse();
+
+  ServerResponse(const ServerResponse& from);
+
+  inline ServerResponse& operator=(const ServerResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ServerResponse& default_instance();
+
+  void Swap(ServerResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  ServerResponse* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const ServerResponse& from);
+  void MergeFrom(const ServerResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bytes code = 1;
+  inline bool has_code() const;
+  inline void clear_code();
+  static const int kCodeFieldNumber = 1;
+  inline const ::std::string& code() const;
+  inline void set_code(const ::std::string& value);
+  inline void set_code(const char* value);
+  inline void set_code(const void* value, size_t size);
+  inline ::std::string* mutable_code();
+  inline ::std::string* release_code();
+  inline void set_allocated_code(::std::string* code);
+
+  // optional bytes description = 2;
+  inline bool has_description() const;
+  inline void clear_description();
+  static const int kDescriptionFieldNumber = 2;
+  inline const ::std::string& description() const;
+  inline void set_description(const ::std::string& value);
+  inline void set_description(const char* value);
+  inline void set_description(const void* value, size_t size);
+  inline ::std::string* mutable_description();
+  inline ::std::string* release_description();
+  inline void set_allocated_description(::std::string* description);
+
+  // @@protoc_insertion_point(class_scope:rm.ServerResponse)
+ private:
+  inline void set_has_code();
+  inline void clear_has_code();
+  inline void set_has_description();
+  inline void clear_has_description();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* code_;
+  ::std::string* description_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_RedMalk_2eproto();
+  friend void protobuf_AssignDesc_RedMalk_2eproto();
+  friend void protobuf_ShutdownFile_RedMalk_2eproto();
+
+  void InitAsDefaultInstance();
+  static ServerResponse* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class RegisteringData : public ::google::protobuf::Message {
+ public:
+  RegisteringData();
+  virtual ~RegisteringData();
+
+  RegisteringData(const RegisteringData& from);
+
+  inline RegisteringData& operator=(const RegisteringData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const RegisteringData& default_instance();
+
+  void Swap(RegisteringData* other);
+
+  // implements Message ----------------------------------------------
+
+  RegisteringData* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const RegisteringData& from);
+  void MergeFrom(const RegisteringData& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bytes uname = 1;
+  inline bool has_uname() const;
+  inline void clear_uname();
+  static const int kUnameFieldNumber = 1;
+  inline const ::std::string& uname() const;
+  inline void set_uname(const ::std::string& value);
+  inline void set_uname(const char* value);
+  inline void set_uname(const void* value, size_t size);
+  inline ::std::string* mutable_uname();
+  inline ::std::string* release_uname();
+  inline void set_allocated_uname(::std::string* uname);
+
+  // required bytes email = 2;
+  inline bool has_email() const;
+  inline void clear_email();
+  static const int kEmailFieldNumber = 2;
+  inline const ::std::string& email() const;
+  inline void set_email(const ::std::string& value);
+  inline void set_email(const char* value);
+  inline void set_email(const void* value, size_t size);
+  inline ::std::string* mutable_email();
+  inline ::std::string* release_email();
+  inline void set_allocated_email(::std::string* email);
+
+  // required bytes password = 3;
+  inline bool has_password() const;
+  inline void clear_password();
+  static const int kPasswordFieldNumber = 3;
+  inline const ::std::string& password() const;
+  inline void set_password(const ::std::string& value);
+  inline void set_password(const char* value);
+  inline void set_password(const void* value, size_t size);
+  inline ::std::string* mutable_password();
+  inline ::std::string* release_password();
+  inline void set_allocated_password(::std::string* password);
+
+  // @@protoc_insertion_point(class_scope:rm.RegisteringData)
+ private:
+  inline void set_has_uname();
+  inline void clear_has_uname();
+  inline void set_has_email();
+  inline void clear_has_email();
+  inline void set_has_password();
+  inline void clear_has_password();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* uname_;
+  ::std::string* email_;
+  ::std::string* password_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_RedMalk_2eproto();
+  friend void protobuf_AssignDesc_RedMalk_2eproto();
+  friend void protobuf_ShutdownFile_RedMalk_2eproto();
+
+  void InitAsDefaultInstance();
+  static RegisteringData* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class chatAuth : public ::google::protobuf::Message {
+ public:
+  chatAuth();
+  virtual ~chatAuth();
+
+  chatAuth(const chatAuth& from);
+
+  inline chatAuth& operator=(const chatAuth& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const chatAuth& default_instance();
+
+  void Swap(chatAuth* other);
+
+  // implements Message ----------------------------------------------
+
+  chatAuth* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const chatAuth& from);
+  void MergeFrom(const chatAuth& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bytes user = 1;
+  inline bool has_user() const;
+  inline void clear_user();
+  static const int kUserFieldNumber = 1;
+  inline const ::std::string& user() const;
+  inline void set_user(const ::std::string& value);
+  inline void set_user(const char* value);
+  inline void set_user(const void* value, size_t size);
+  inline ::std::string* mutable_user();
+  inline ::std::string* release_user();
+  inline void set_allocated_user(::std::string* user);
+
+  // required bytes server = 2;
+  inline bool has_server() const;
+  inline void clear_server();
+  static const int kServerFieldNumber = 2;
+  inline const ::std::string& server() const;
+  inline void set_server(const ::std::string& value);
+  inline void set_server(const char* value);
+  inline void set_server(const void* value, size_t size);
+  inline ::std::string* mutable_server();
+  inline ::std::string* release_server();
+  inline void set_allocated_server(::std::string* server);
+
+  // optional bytes key = 3;
+  inline bool has_key() const;
+  inline void clear_key();
+  static const int kKeyFieldNumber = 3;
+  inline const ::std::string& key() const;
+  inline void set_key(const ::std::string& value);
+  inline void set_key(const char* value);
+  inline void set_key(const void* value, size_t size);
+  inline ::std::string* mutable_key();
+  inline ::std::string* release_key();
+  inline void set_allocated_key(::std::string* key);
+
+  // optional bytes keyAlt = 4;
+  inline bool has_keyalt() const;
+  inline void clear_keyalt();
+  static const int kKeyAltFieldNumber = 4;
+  inline const ::std::string& keyalt() const;
+  inline void set_keyalt(const ::std::string& value);
+  inline void set_keyalt(const char* value);
+  inline void set_keyalt(const void* value, size_t size);
+  inline ::std::string* mutable_keyalt();
+  inline ::std::string* release_keyalt();
+  inline void set_allocated_keyalt(::std::string* keyalt);
+
+  // @@protoc_insertion_point(class_scope:rm.chatAuth)
+ private:
+  inline void set_has_user();
+  inline void clear_has_user();
+  inline void set_has_server();
+  inline void clear_has_server();
+  inline void set_has_key();
+  inline void clear_has_key();
+  inline void set_has_keyalt();
+  inline void clear_has_keyalt();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* user_;
+  ::std::string* server_;
+  ::std::string* key_;
+  ::std::string* keyalt_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+
+  friend void  protobuf_AddDesc_RedMalk_2eproto();
+  friend void protobuf_AssignDesc_RedMalk_2eproto();
+  friend void protobuf_ShutdownFile_RedMalk_2eproto();
+
+  void InitAsDefaultInstance();
+  static chatAuth* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class chatTextMsg : public ::google::protobuf::Message {
+ public:
+  chatTextMsg();
+  virtual ~chatTextMsg();
+
+  chatTextMsg(const chatTextMsg& from);
+
+  inline chatTextMsg& operator=(const chatTextMsg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const chatTextMsg& default_instance();
+
+  void Swap(chatTextMsg* other);
+
+  // implements Message ----------------------------------------------
+
+  chatTextMsg* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const chatTextMsg& from);
+  void MergeFrom(const chatTextMsg& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bytes user = 1;
+  inline bool has_user() const;
+  inline void clear_user();
+  static const int kUserFieldNumber = 1;
+  inline const ::std::string& user() const;
+  inline void set_user(const ::std::string& value);
+  inline void set_user(const char* value);
+  inline void set_user(const void* value, size_t size);
+  inline ::std::string* mutable_user();
+  inline ::std::string* release_user();
+  inline void set_allocated_user(::std::string* user);
+
+  // required bytes msg = 2;
+  inline bool has_msg() const;
+  inline void clear_msg();
+  static const int kMsgFieldNumber = 2;
+  inline const ::std::string& msg() const;
+  inline void set_msg(const ::std::string& value);
+  inline void set_msg(const char* value);
+  inline void set_msg(const void* value, size_t size);
+  inline ::std::string* mutable_msg();
+  inline ::std::string* release_msg();
+  inline void set_allocated_msg(::std::string* msg);
+
+  // @@protoc_insertion_point(class_scope:rm.chatTextMsg)
+ private:
+  inline void set_has_user();
+  inline void clear_has_user();
+  inline void set_has_msg();
+  inline void clear_has_msg();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* user_;
+  ::std::string* msg_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_RedMalk_2eproto();
+  friend void protobuf_AssignDesc_RedMalk_2eproto();
+  friend void protobuf_ShutdownFile_RedMalk_2eproto();
+
+  void InitAsDefaultInstance();
+  static chatTextMsg* default_instance_;
 };
 // ===================================================================
 
@@ -1124,7 +2329,7 @@ inline void VersionPackage::set_allocated_so(::std::string* so) {
 
 // Notice
 
-// required string content = 1;
+// required bytes content = 1;
 inline bool Notice::has_content() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1157,7 +2362,7 @@ inline void Notice::set_content(const char* value) {
   }
   content_->assign(value);
 }
-inline void Notice::set_content(const char* value, size_t size) {
+inline void Notice::set_content(const void* value, size_t size) {
   set_has_content();
   if (content_ == &::google::protobuf::internal::kEmptyString) {
     content_ = new ::std::string;
@@ -1194,7 +2399,7 @@ inline void Notice::set_allocated_content(::std::string* content) {
   }
 }
 
-// required string type = 2;
+// required bytes type = 2;
 inline bool Notice::has_type() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1227,7 +2432,7 @@ inline void Notice::set_type(const char* value) {
   }
   type_->assign(value);
 }
-inline void Notice::set_type(const char* value, size_t size) {
+inline void Notice::set_type(const void* value, size_t size) {
   set_has_type();
   if (type_ == &::google::protobuf::internal::kEmptyString) {
     type_ = new ::std::string;
@@ -1264,7 +2469,7 @@ inline void Notice::set_allocated_type(::std::string* type) {
   }
 }
 
-// required string relevance = 3;
+// required bytes relevance = 3;
 inline bool Notice::has_relevance() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -1297,7 +2502,7 @@ inline void Notice::set_relevance(const char* value) {
   }
   relevance_->assign(value);
 }
-inline void Notice::set_relevance(const char* value, size_t size) {
+inline void Notice::set_relevance(const void* value, size_t size) {
   set_has_relevance();
   if (relevance_ == &::google::protobuf::internal::kEmptyString) {
     relevance_ = new ::std::string;
@@ -1367,7 +2572,7 @@ News::mutable_notice() {
 
 // Auth
 
-// required string user = 1;
+// required bytes user = 1;
 inline bool Auth::has_user() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1400,7 +2605,7 @@ inline void Auth::set_user(const char* value) {
   }
   user_->assign(value);
 }
-inline void Auth::set_user(const char* value, size_t size) {
+inline void Auth::set_user(const void* value, size_t size) {
   set_has_user();
   if (user_ == &::google::protobuf::internal::kEmptyString) {
     user_ = new ::std::string;
@@ -1437,7 +2642,7 @@ inline void Auth::set_allocated_user(::std::string* user) {
   }
 }
 
-// required string password = 2;
+// required bytes password = 2;
 inline bool Auth::has_password() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1470,7 +2675,7 @@ inline void Auth::set_password(const char* value) {
   }
   password_->assign(value);
 }
-inline void Auth::set_password(const char* value, size_t size) {
+inline void Auth::set_password(const void* value, size_t size) {
   set_has_password();
   if (password_ == &::google::protobuf::internal::kEmptyString) {
     password_ = new ::std::string;
@@ -1507,7 +2712,7 @@ inline void Auth::set_allocated_password(::std::string* password) {
   }
 }
 
-// required int32 port = 3;
+// required bytes port = 3;
 inline bool Auth::has_port() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -1518,22 +2723,70 @@ inline void Auth::clear_has_port() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void Auth::clear_port() {
-  port_ = 0;
+  if (port_ != &::google::protobuf::internal::kEmptyString) {
+    port_->clear();
+  }
   clear_has_port();
 }
-inline ::google::protobuf::int32 Auth::port() const {
+inline const ::std::string& Auth::port() const {
+  return *port_;
+}
+inline void Auth::set_port(const ::std::string& value) {
+  set_has_port();
+  if (port_ == &::google::protobuf::internal::kEmptyString) {
+    port_ = new ::std::string;
+  }
+  port_->assign(value);
+}
+inline void Auth::set_port(const char* value) {
+  set_has_port();
+  if (port_ == &::google::protobuf::internal::kEmptyString) {
+    port_ = new ::std::string;
+  }
+  port_->assign(value);
+}
+inline void Auth::set_port(const void* value, size_t size) {
+  set_has_port();
+  if (port_ == &::google::protobuf::internal::kEmptyString) {
+    port_ = new ::std::string;
+  }
+  port_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* Auth::mutable_port() {
+  set_has_port();
+  if (port_ == &::google::protobuf::internal::kEmptyString) {
+    port_ = new ::std::string;
+  }
   return port_;
 }
-inline void Auth::set_port(::google::protobuf::int32 value) {
-  set_has_port();
-  port_ = value;
+inline ::std::string* Auth::release_port() {
+  clear_has_port();
+  if (port_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = port_;
+    port_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void Auth::set_allocated_port(::std::string* port) {
+  if (port_ != &::google::protobuf::internal::kEmptyString) {
+    delete port_;
+  }
+  if (port) {
+    set_has_port();
+    port_ = port;
+  } else {
+    clear_has_port();
+    port_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 // -------------------------------------------------------------------
 
 // PersonalNew
 
-// required string content = 1;
+// optional bytes content = 1;
 inline bool PersonalNew::has_content() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1566,7 +2819,7 @@ inline void PersonalNew::set_content(const char* value) {
   }
   content_->assign(value);
 }
-inline void PersonalNew::set_content(const char* value, size_t size) {
+inline void PersonalNew::set_content(const void* value, size_t size) {
   set_has_content();
   if (content_ == &::google::protobuf::internal::kEmptyString) {
     content_ = new ::std::string;
@@ -1603,7 +2856,7 @@ inline void PersonalNew::set_allocated_content(::std::string* content) {
   }
 }
 
-// required string user = 4;
+// required bytes user = 3;
 inline bool PersonalNew::has_user() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1636,7 +2889,7 @@ inline void PersonalNew::set_user(const char* value) {
   }
   user_->assign(value);
 }
-inline void PersonalNew::set_user(const char* value, size_t size) {
+inline void PersonalNew::set_user(const void* value, size_t size) {
   set_has_user();
   if (user_ == &::google::protobuf::internal::kEmptyString) {
     user_ = new ::std::string;
@@ -1673,15 +2926,85 @@ inline void PersonalNew::set_allocated_user(::std::string* user) {
   }
 }
 
-// required string type = 2;
-inline bool PersonalNew::has_type() const {
+// required bytes userServer = 5;
+inline bool PersonalNew::has_userserver() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void PersonalNew::set_has_type() {
+inline void PersonalNew::set_has_userserver() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void PersonalNew::clear_has_type() {
+inline void PersonalNew::clear_has_userserver() {
   _has_bits_[0] &= ~0x00000004u;
+}
+inline void PersonalNew::clear_userserver() {
+  if (userserver_ != &::google::protobuf::internal::kEmptyString) {
+    userserver_->clear();
+  }
+  clear_has_userserver();
+}
+inline const ::std::string& PersonalNew::userserver() const {
+  return *userserver_;
+}
+inline void PersonalNew::set_userserver(const ::std::string& value) {
+  set_has_userserver();
+  if (userserver_ == &::google::protobuf::internal::kEmptyString) {
+    userserver_ = new ::std::string;
+  }
+  userserver_->assign(value);
+}
+inline void PersonalNew::set_userserver(const char* value) {
+  set_has_userserver();
+  if (userserver_ == &::google::protobuf::internal::kEmptyString) {
+    userserver_ = new ::std::string;
+  }
+  userserver_->assign(value);
+}
+inline void PersonalNew::set_userserver(const void* value, size_t size) {
+  set_has_userserver();
+  if (userserver_ == &::google::protobuf::internal::kEmptyString) {
+    userserver_ = new ::std::string;
+  }
+  userserver_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* PersonalNew::mutable_userserver() {
+  set_has_userserver();
+  if (userserver_ == &::google::protobuf::internal::kEmptyString) {
+    userserver_ = new ::std::string;
+  }
+  return userserver_;
+}
+inline ::std::string* PersonalNew::release_userserver() {
+  clear_has_userserver();
+  if (userserver_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = userserver_;
+    userserver_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void PersonalNew::set_allocated_userserver(::std::string* userserver) {
+  if (userserver_ != &::google::protobuf::internal::kEmptyString) {
+    delete userserver_;
+  }
+  if (userserver) {
+    set_has_userserver();
+    userserver_ = userserver;
+  } else {
+    clear_has_userserver();
+    userserver_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes type = 2;
+inline bool PersonalNew::has_type() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void PersonalNew::set_has_type() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void PersonalNew::clear_has_type() {
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void PersonalNew::clear_type() {
   if (type_ != &::google::protobuf::internal::kEmptyString) {
@@ -1706,7 +3029,7 @@ inline void PersonalNew::set_type(const char* value) {
   }
   type_->assign(value);
 }
-inline void PersonalNew::set_type(const char* value, size_t size) {
+inline void PersonalNew::set_type(const void* value, size_t size) {
   set_has_type();
   if (type_ == &::google::protobuf::internal::kEmptyString) {
     type_ = new ::std::string;
@@ -1743,73 +3066,213 @@ inline void PersonalNew::set_allocated_type(::std::string* type) {
   }
 }
 
-// required string relevance = 3;
-inline bool PersonalNew::has_relevance() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+// optional bytes internalData = 4;
+inline bool PersonalNew::has_internaldata() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void PersonalNew::set_has_relevance() {
-  _has_bits_[0] |= 0x00000008u;
+inline void PersonalNew::set_has_internaldata() {
+  _has_bits_[0] |= 0x00000010u;
 }
-inline void PersonalNew::clear_has_relevance() {
-  _has_bits_[0] &= ~0x00000008u;
+inline void PersonalNew::clear_has_internaldata() {
+  _has_bits_[0] &= ~0x00000010u;
 }
-inline void PersonalNew::clear_relevance() {
-  if (relevance_ != &::google::protobuf::internal::kEmptyString) {
-    relevance_->clear();
+inline void PersonalNew::clear_internaldata() {
+  if (internaldata_ != &::google::protobuf::internal::kEmptyString) {
+    internaldata_->clear();
   }
-  clear_has_relevance();
+  clear_has_internaldata();
 }
-inline const ::std::string& PersonalNew::relevance() const {
-  return *relevance_;
+inline const ::std::string& PersonalNew::internaldata() const {
+  return *internaldata_;
 }
-inline void PersonalNew::set_relevance(const ::std::string& value) {
-  set_has_relevance();
-  if (relevance_ == &::google::protobuf::internal::kEmptyString) {
-    relevance_ = new ::std::string;
+inline void PersonalNew::set_internaldata(const ::std::string& value) {
+  set_has_internaldata();
+  if (internaldata_ == &::google::protobuf::internal::kEmptyString) {
+    internaldata_ = new ::std::string;
   }
-  relevance_->assign(value);
+  internaldata_->assign(value);
 }
-inline void PersonalNew::set_relevance(const char* value) {
-  set_has_relevance();
-  if (relevance_ == &::google::protobuf::internal::kEmptyString) {
-    relevance_ = new ::std::string;
+inline void PersonalNew::set_internaldata(const char* value) {
+  set_has_internaldata();
+  if (internaldata_ == &::google::protobuf::internal::kEmptyString) {
+    internaldata_ = new ::std::string;
   }
-  relevance_->assign(value);
+  internaldata_->assign(value);
 }
-inline void PersonalNew::set_relevance(const char* value, size_t size) {
-  set_has_relevance();
-  if (relevance_ == &::google::protobuf::internal::kEmptyString) {
-    relevance_ = new ::std::string;
+inline void PersonalNew::set_internaldata(const void* value, size_t size) {
+  set_has_internaldata();
+  if (internaldata_ == &::google::protobuf::internal::kEmptyString) {
+    internaldata_ = new ::std::string;
   }
-  relevance_->assign(reinterpret_cast<const char*>(value), size);
+  internaldata_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* PersonalNew::mutable_relevance() {
-  set_has_relevance();
-  if (relevance_ == &::google::protobuf::internal::kEmptyString) {
-    relevance_ = new ::std::string;
+inline ::std::string* PersonalNew::mutable_internaldata() {
+  set_has_internaldata();
+  if (internaldata_ == &::google::protobuf::internal::kEmptyString) {
+    internaldata_ = new ::std::string;
   }
-  return relevance_;
+  return internaldata_;
 }
-inline ::std::string* PersonalNew::release_relevance() {
-  clear_has_relevance();
-  if (relevance_ == &::google::protobuf::internal::kEmptyString) {
+inline ::std::string* PersonalNew::release_internaldata() {
+  clear_has_internaldata();
+  if (internaldata_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
-    ::std::string* temp = relevance_;
-    relevance_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    ::std::string* temp = internaldata_;
+    internaldata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
 }
-inline void PersonalNew::set_allocated_relevance(::std::string* relevance) {
-  if (relevance_ != &::google::protobuf::internal::kEmptyString) {
-    delete relevance_;
+inline void PersonalNew::set_allocated_internaldata(::std::string* internaldata) {
+  if (internaldata_ != &::google::protobuf::internal::kEmptyString) {
+    delete internaldata_;
   }
-  if (relevance) {
-    set_has_relevance();
-    relevance_ = relevance;
+  if (internaldata) {
+    set_has_internaldata();
+    internaldata_ = internaldata;
   } else {
-    clear_has_relevance();
-    relevance_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    clear_has_internaldata();
+    internaldata_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional bytes internalDataAux = 6;
+inline bool PersonalNew::has_internaldataaux() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void PersonalNew::set_has_internaldataaux() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void PersonalNew::clear_has_internaldataaux() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void PersonalNew::clear_internaldataaux() {
+  if (internaldataaux_ != &::google::protobuf::internal::kEmptyString) {
+    internaldataaux_->clear();
+  }
+  clear_has_internaldataaux();
+}
+inline const ::std::string& PersonalNew::internaldataaux() const {
+  return *internaldataaux_;
+}
+inline void PersonalNew::set_internaldataaux(const ::std::string& value) {
+  set_has_internaldataaux();
+  if (internaldataaux_ == &::google::protobuf::internal::kEmptyString) {
+    internaldataaux_ = new ::std::string;
+  }
+  internaldataaux_->assign(value);
+}
+inline void PersonalNew::set_internaldataaux(const char* value) {
+  set_has_internaldataaux();
+  if (internaldataaux_ == &::google::protobuf::internal::kEmptyString) {
+    internaldataaux_ = new ::std::string;
+  }
+  internaldataaux_->assign(value);
+}
+inline void PersonalNew::set_internaldataaux(const void* value, size_t size) {
+  set_has_internaldataaux();
+  if (internaldataaux_ == &::google::protobuf::internal::kEmptyString) {
+    internaldataaux_ = new ::std::string;
+  }
+  internaldataaux_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* PersonalNew::mutable_internaldataaux() {
+  set_has_internaldataaux();
+  if (internaldataaux_ == &::google::protobuf::internal::kEmptyString) {
+    internaldataaux_ = new ::std::string;
+  }
+  return internaldataaux_;
+}
+inline ::std::string* PersonalNew::release_internaldataaux() {
+  clear_has_internaldataaux();
+  if (internaldataaux_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = internaldataaux_;
+    internaldataaux_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void PersonalNew::set_allocated_internaldataaux(::std::string* internaldataaux) {
+  if (internaldataaux_ != &::google::protobuf::internal::kEmptyString) {
+    delete internaldataaux_;
+  }
+  if (internaldataaux) {
+    set_has_internaldataaux();
+    internaldataaux_ = internaldataaux;
+  } else {
+    clear_has_internaldataaux();
+    internaldataaux_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional bytes response = 7;
+inline bool PersonalNew::has_response() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void PersonalNew::set_has_response() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void PersonalNew::clear_has_response() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void PersonalNew::clear_response() {
+  if (response_ != &::google::protobuf::internal::kEmptyString) {
+    response_->clear();
+  }
+  clear_has_response();
+}
+inline const ::std::string& PersonalNew::response() const {
+  return *response_;
+}
+inline void PersonalNew::set_response(const ::std::string& value) {
+  set_has_response();
+  if (response_ == &::google::protobuf::internal::kEmptyString) {
+    response_ = new ::std::string;
+  }
+  response_->assign(value);
+}
+inline void PersonalNew::set_response(const char* value) {
+  set_has_response();
+  if (response_ == &::google::protobuf::internal::kEmptyString) {
+    response_ = new ::std::string;
+  }
+  response_->assign(value);
+}
+inline void PersonalNew::set_response(const void* value, size_t size) {
+  set_has_response();
+  if (response_ == &::google::protobuf::internal::kEmptyString) {
+    response_ = new ::std::string;
+  }
+  response_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* PersonalNew::mutable_response() {
+  set_has_response();
+  if (response_ == &::google::protobuf::internal::kEmptyString) {
+    response_ = new ::std::string;
+  }
+  return response_;
+}
+inline ::std::string* PersonalNew::release_response() {
+  clear_has_response();
+  if (response_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = response_;
+    response_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void PersonalNew::set_allocated_response(::std::string* response) {
+  if (response_ != &::google::protobuf::internal::kEmptyString) {
+    delete response_;
+  }
+  if (response) {
+    set_has_response();
+    response_ = response;
+  } else {
+    clear_has_response();
+    response_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 
@@ -1844,9 +3307,717 @@ PersonalNews::mutable_personalnew() {
 
 // -------------------------------------------------------------------
 
+// Invitation
+
+// required bytes user = 1;
+inline bool Invitation::has_user() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Invitation::set_has_user() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Invitation::clear_has_user() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Invitation::clear_user() {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    user_->clear();
+  }
+  clear_has_user();
+}
+inline const ::std::string& Invitation::user() const {
+  return *user_;
+}
+inline void Invitation::set_user(const ::std::string& value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void Invitation::set_user(const char* value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void Invitation::set_user(const void* value, size_t size) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* Invitation::mutable_user() {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  return user_;
+}
+inline ::std::string* Invitation::release_user() {
+  clear_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = user_;
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void Invitation::set_allocated_user(::std::string* user) {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    delete user_;
+  }
+  if (user) {
+    set_has_user();
+    user_ = user;
+  } else {
+    clear_has_user();
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes server = 5;
+inline bool Invitation::has_server() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Invitation::set_has_server() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Invitation::clear_has_server() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void Invitation::clear_server() {
+  if (server_ != &::google::protobuf::internal::kEmptyString) {
+    server_->clear();
+  }
+  clear_has_server();
+}
+inline const ::std::string& Invitation::server() const {
+  return *server_;
+}
+inline void Invitation::set_server(const ::std::string& value) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(value);
+}
+inline void Invitation::set_server(const char* value) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(value);
+}
+inline void Invitation::set_server(const void* value, size_t size) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* Invitation::mutable_server() {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  return server_;
+}
+inline ::std::string* Invitation::release_server() {
+  clear_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = server_;
+    server_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void Invitation::set_allocated_server(::std::string* server) {
+  if (server_ != &::google::protobuf::internal::kEmptyString) {
+    delete server_;
+  }
+  if (server) {
+    set_has_server();
+    server_ = server;
+  } else {
+    clear_has_server();
+    server_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes destinatary = 2;
+inline bool Invitation::has_destinatary() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void Invitation::set_has_destinatary() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void Invitation::clear_has_destinatary() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void Invitation::clear_destinatary() {
+  if (destinatary_ != &::google::protobuf::internal::kEmptyString) {
+    destinatary_->clear();
+  }
+  clear_has_destinatary();
+}
+inline const ::std::string& Invitation::destinatary() const {
+  return *destinatary_;
+}
+inline void Invitation::set_destinatary(const ::std::string& value) {
+  set_has_destinatary();
+  if (destinatary_ == &::google::protobuf::internal::kEmptyString) {
+    destinatary_ = new ::std::string;
+  }
+  destinatary_->assign(value);
+}
+inline void Invitation::set_destinatary(const char* value) {
+  set_has_destinatary();
+  if (destinatary_ == &::google::protobuf::internal::kEmptyString) {
+    destinatary_ = new ::std::string;
+  }
+  destinatary_->assign(value);
+}
+inline void Invitation::set_destinatary(const void* value, size_t size) {
+  set_has_destinatary();
+  if (destinatary_ == &::google::protobuf::internal::kEmptyString) {
+    destinatary_ = new ::std::string;
+  }
+  destinatary_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* Invitation::mutable_destinatary() {
+  set_has_destinatary();
+  if (destinatary_ == &::google::protobuf::internal::kEmptyString) {
+    destinatary_ = new ::std::string;
+  }
+  return destinatary_;
+}
+inline ::std::string* Invitation::release_destinatary() {
+  clear_has_destinatary();
+  if (destinatary_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = destinatary_;
+    destinatary_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void Invitation::set_allocated_destinatary(::std::string* destinatary) {
+  if (destinatary_ != &::google::protobuf::internal::kEmptyString) {
+    delete destinatary_;
+  }
+  if (destinatary) {
+    set_has_destinatary();
+    destinatary_ = destinatary;
+  } else {
+    clear_has_destinatary();
+    destinatary_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes msg = 3;
+inline bool Invitation::has_msg() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void Invitation::set_has_msg() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void Invitation::clear_has_msg() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void Invitation::clear_msg() {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    msg_->clear();
+  }
+  clear_has_msg();
+}
+inline const ::std::string& Invitation::msg() const {
+  return *msg_;
+}
+inline void Invitation::set_msg(const ::std::string& value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void Invitation::set_msg(const char* value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void Invitation::set_msg(const void* value, size_t size) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* Invitation::mutable_msg() {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  return msg_;
+}
+inline ::std::string* Invitation::release_msg() {
+  clear_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = msg_;
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void Invitation::set_allocated_msg(::std::string* msg) {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    delete msg_;
+  }
+  if (msg) {
+    set_has_msg();
+    msg_ = msg;
+  } else {
+    clear_has_msg();
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes key = 4;
+inline bool Invitation::has_key() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void Invitation::set_has_key() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void Invitation::clear_has_key() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void Invitation::clear_key() {
+  if (key_ != &::google::protobuf::internal::kEmptyString) {
+    key_->clear();
+  }
+  clear_has_key();
+}
+inline const ::std::string& Invitation::key() const {
+  return *key_;
+}
+inline void Invitation::set_key(const ::std::string& value) {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  key_->assign(value);
+}
+inline void Invitation::set_key(const char* value) {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  key_->assign(value);
+}
+inline void Invitation::set_key(const void* value, size_t size) {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  key_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* Invitation::mutable_key() {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  return key_;
+}
+inline ::std::string* Invitation::release_key() {
+  clear_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = key_;
+    key_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void Invitation::set_allocated_key(::std::string* key) {
+  if (key_ != &::google::protobuf::internal::kEmptyString) {
+    delete key_;
+  }
+  if (key) {
+    set_has_key();
+    key_ = key;
+  } else {
+    clear_has_key();
+    key_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// serverInvitationVerif
+
+// required bytes userInvited = 1;
+inline bool serverInvitationVerif::has_userinvited() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void serverInvitationVerif::set_has_userinvited() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void serverInvitationVerif::clear_has_userinvited() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void serverInvitationVerif::clear_userinvited() {
+  if (userinvited_ != &::google::protobuf::internal::kEmptyString) {
+    userinvited_->clear();
+  }
+  clear_has_userinvited();
+}
+inline const ::std::string& serverInvitationVerif::userinvited() const {
+  return *userinvited_;
+}
+inline void serverInvitationVerif::set_userinvited(const ::std::string& value) {
+  set_has_userinvited();
+  if (userinvited_ == &::google::protobuf::internal::kEmptyString) {
+    userinvited_ = new ::std::string;
+  }
+  userinvited_->assign(value);
+}
+inline void serverInvitationVerif::set_userinvited(const char* value) {
+  set_has_userinvited();
+  if (userinvited_ == &::google::protobuf::internal::kEmptyString) {
+    userinvited_ = new ::std::string;
+  }
+  userinvited_->assign(value);
+}
+inline void serverInvitationVerif::set_userinvited(const void* value, size_t size) {
+  set_has_userinvited();
+  if (userinvited_ == &::google::protobuf::internal::kEmptyString) {
+    userinvited_ = new ::std::string;
+  }
+  userinvited_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* serverInvitationVerif::mutable_userinvited() {
+  set_has_userinvited();
+  if (userinvited_ == &::google::protobuf::internal::kEmptyString) {
+    userinvited_ = new ::std::string;
+  }
+  return userinvited_;
+}
+inline ::std::string* serverInvitationVerif::release_userinvited() {
+  clear_has_userinvited();
+  if (userinvited_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = userinvited_;
+    userinvited_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void serverInvitationVerif::set_allocated_userinvited(::std::string* userinvited) {
+  if (userinvited_ != &::google::protobuf::internal::kEmptyString) {
+    delete userinvited_;
+  }
+  if (userinvited) {
+    set_has_userinvited();
+    userinvited_ = userinvited;
+  } else {
+    clear_has_userinvited();
+    userinvited_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes userInviting = 2;
+inline bool serverInvitationVerif::has_userinviting() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void serverInvitationVerif::set_has_userinviting() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void serverInvitationVerif::clear_has_userinviting() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void serverInvitationVerif::clear_userinviting() {
+  if (userinviting_ != &::google::protobuf::internal::kEmptyString) {
+    userinviting_->clear();
+  }
+  clear_has_userinviting();
+}
+inline const ::std::string& serverInvitationVerif::userinviting() const {
+  return *userinviting_;
+}
+inline void serverInvitationVerif::set_userinviting(const ::std::string& value) {
+  set_has_userinviting();
+  if (userinviting_ == &::google::protobuf::internal::kEmptyString) {
+    userinviting_ = new ::std::string;
+  }
+  userinviting_->assign(value);
+}
+inline void serverInvitationVerif::set_userinviting(const char* value) {
+  set_has_userinviting();
+  if (userinviting_ == &::google::protobuf::internal::kEmptyString) {
+    userinviting_ = new ::std::string;
+  }
+  userinviting_->assign(value);
+}
+inline void serverInvitationVerif::set_userinviting(const void* value, size_t size) {
+  set_has_userinviting();
+  if (userinviting_ == &::google::protobuf::internal::kEmptyString) {
+    userinviting_ = new ::std::string;
+  }
+  userinviting_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* serverInvitationVerif::mutable_userinviting() {
+  set_has_userinviting();
+  if (userinviting_ == &::google::protobuf::internal::kEmptyString) {
+    userinviting_ = new ::std::string;
+  }
+  return userinviting_;
+}
+inline ::std::string* serverInvitationVerif::release_userinviting() {
+  clear_has_userinviting();
+  if (userinviting_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = userinviting_;
+    userinviting_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void serverInvitationVerif::set_allocated_userinviting(::std::string* userinviting) {
+  if (userinviting_ != &::google::protobuf::internal::kEmptyString) {
+    delete userinviting_;
+  }
+  if (userinviting) {
+    set_has_userinviting();
+    userinviting_ = userinviting;
+  } else {
+    clear_has_userinviting();
+    userinviting_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes server = 4;
+inline bool serverInvitationVerif::has_server() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void serverInvitationVerif::set_has_server() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void serverInvitationVerif::clear_has_server() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void serverInvitationVerif::clear_server() {
+  if (server_ != &::google::protobuf::internal::kEmptyString) {
+    server_->clear();
+  }
+  clear_has_server();
+}
+inline const ::std::string& serverInvitationVerif::server() const {
+  return *server_;
+}
+inline void serverInvitationVerif::set_server(const ::std::string& value) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(value);
+}
+inline void serverInvitationVerif::set_server(const char* value) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(value);
+}
+inline void serverInvitationVerif::set_server(const void* value, size_t size) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* serverInvitationVerif::mutable_server() {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  return server_;
+}
+inline ::std::string* serverInvitationVerif::release_server() {
+  clear_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = server_;
+    server_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void serverInvitationVerif::set_allocated_server(::std::string* server) {
+  if (server_ != &::google::protobuf::internal::kEmptyString) {
+    delete server_;
+  }
+  if (server) {
+    set_has_server();
+    server_ = server;
+  } else {
+    clear_has_server();
+    server_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes key = 3;
+inline bool serverInvitationVerif::has_key() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void serverInvitationVerif::set_has_key() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void serverInvitationVerif::clear_has_key() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void serverInvitationVerif::clear_key() {
+  if (key_ != &::google::protobuf::internal::kEmptyString) {
+    key_->clear();
+  }
+  clear_has_key();
+}
+inline const ::std::string& serverInvitationVerif::key() const {
+  return *key_;
+}
+inline void serverInvitationVerif::set_key(const ::std::string& value) {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  key_->assign(value);
+}
+inline void serverInvitationVerif::set_key(const char* value) {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  key_->assign(value);
+}
+inline void serverInvitationVerif::set_key(const void* value, size_t size) {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  key_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* serverInvitationVerif::mutable_key() {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  return key_;
+}
+inline ::std::string* serverInvitationVerif::release_key() {
+  clear_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = key_;
+    key_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void serverInvitationVerif::set_allocated_key(::std::string* key) {
+  if (key_ != &::google::protobuf::internal::kEmptyString) {
+    delete key_;
+  }
+  if (key) {
+    set_has_key();
+    key_ = key;
+  } else {
+    clear_has_key();
+    key_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional bytes response = 5;
+inline bool serverInvitationVerif::has_response() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void serverInvitationVerif::set_has_response() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void serverInvitationVerif::clear_has_response() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void serverInvitationVerif::clear_response() {
+  if (response_ != &::google::protobuf::internal::kEmptyString) {
+    response_->clear();
+  }
+  clear_has_response();
+}
+inline const ::std::string& serverInvitationVerif::response() const {
+  return *response_;
+}
+inline void serverInvitationVerif::set_response(const ::std::string& value) {
+  set_has_response();
+  if (response_ == &::google::protobuf::internal::kEmptyString) {
+    response_ = new ::std::string;
+  }
+  response_->assign(value);
+}
+inline void serverInvitationVerif::set_response(const char* value) {
+  set_has_response();
+  if (response_ == &::google::protobuf::internal::kEmptyString) {
+    response_ = new ::std::string;
+  }
+  response_->assign(value);
+}
+inline void serverInvitationVerif::set_response(const void* value, size_t size) {
+  set_has_response();
+  if (response_ == &::google::protobuf::internal::kEmptyString) {
+    response_ = new ::std::string;
+  }
+  response_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* serverInvitationVerif::mutable_response() {
+  set_has_response();
+  if (response_ == &::google::protobuf::internal::kEmptyString) {
+    response_ = new ::std::string;
+  }
+  return response_;
+}
+inline ::std::string* serverInvitationVerif::release_response() {
+  clear_has_response();
+  if (response_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = response_;
+    response_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void serverInvitationVerif::set_allocated_response(::std::string* response) {
+  if (response_ != &::google::protobuf::internal::kEmptyString) {
+    delete response_;
+  }
+  if (response) {
+    set_has_response();
+    response_ = response;
+  } else {
+    clear_has_response();
+    response_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
 // UserData
 
-// required string user = 1;
+// required bytes user = 1;
 inline bool UserData::has_user() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1879,7 +4050,7 @@ inline void UserData::set_user(const char* value) {
   }
   user_->assign(value);
 }
-inline void UserData::set_user(const char* value, size_t size) {
+inline void UserData::set_user(const void* value, size_t size) {
   set_has_user();
   if (user_ == &::google::protobuf::internal::kEmptyString) {
     user_ = new ::std::string;
@@ -1916,7 +4087,7 @@ inline void UserData::set_allocated_user(::std::string* user) {
   }
 }
 
-// required string ip = 2;
+// required bytes ip = 2;
 inline bool UserData::has_ip() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1949,7 +4120,7 @@ inline void UserData::set_ip(const char* value) {
   }
   ip_->assign(value);
 }
-inline void UserData::set_ip(const char* value, size_t size) {
+inline void UserData::set_ip(const void* value, size_t size) {
   set_has_ip();
   if (ip_ == &::google::protobuf::internal::kEmptyString) {
     ip_ = new ::std::string;
@@ -1986,7 +4157,7 @@ inline void UserData::set_allocated_ip(::std::string* ip) {
   }
 }
 
-// required int32 port = 3;
+// required bytes port = 3;
 inline bool UserData::has_port() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -1997,84 +4168,416 @@ inline void UserData::clear_has_port() {
   _has_bits_[0] &= ~0x00000004u;
 }
 inline void UserData::clear_port() {
-  port_ = 0;
+  if (port_ != &::google::protobuf::internal::kEmptyString) {
+    port_->clear();
+  }
   clear_has_port();
 }
-inline ::google::protobuf::int32 UserData::port() const {
+inline const ::std::string& UserData::port() const {
+  return *port_;
+}
+inline void UserData::set_port(const ::std::string& value) {
+  set_has_port();
+  if (port_ == &::google::protobuf::internal::kEmptyString) {
+    port_ = new ::std::string;
+  }
+  port_->assign(value);
+}
+inline void UserData::set_port(const char* value) {
+  set_has_port();
+  if (port_ == &::google::protobuf::internal::kEmptyString) {
+    port_ = new ::std::string;
+  }
+  port_->assign(value);
+}
+inline void UserData::set_port(const void* value, size_t size) {
+  set_has_port();
+  if (port_ == &::google::protobuf::internal::kEmptyString) {
+    port_ = new ::std::string;
+  }
+  port_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* UserData::mutable_port() {
+  set_has_port();
+  if (port_ == &::google::protobuf::internal::kEmptyString) {
+    port_ = new ::std::string;
+  }
   return port_;
 }
-inline void UserData::set_port(::google::protobuf::int32 value) {
-  set_has_port();
-  port_ = value;
-}
-
-// optional string code = 4 [default = "NONE"];
-inline bool UserData::has_code() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void UserData::set_has_code() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void UserData::clear_has_code() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void UserData::clear_code() {
-  if (code_ != _default_code_) {
-    code_->assign(*_default_code_);
-  }
-  clear_has_code();
-}
-inline const ::std::string& UserData::code() const {
-  return *code_;
-}
-inline void UserData::set_code(const ::std::string& value) {
-  set_has_code();
-  if (code_ == _default_code_) {
-    code_ = new ::std::string;
-  }
-  code_->assign(value);
-}
-inline void UserData::set_code(const char* value) {
-  set_has_code();
-  if (code_ == _default_code_) {
-    code_ = new ::std::string;
-  }
-  code_->assign(value);
-}
-inline void UserData::set_code(const char* value, size_t size) {
-  set_has_code();
-  if (code_ == _default_code_) {
-    code_ = new ::std::string;
-  }
-  code_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* UserData::mutable_code() {
-  set_has_code();
-  if (code_ == _default_code_) {
-    code_ = new ::std::string(*_default_code_);
-  }
-  return code_;
-}
-inline ::std::string* UserData::release_code() {
-  clear_has_code();
-  if (code_ == _default_code_) {
+inline ::std::string* UserData::release_port() {
+  clear_has_port();
+  if (port_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
-    ::std::string* temp = code_;
-    code_ = const_cast< ::std::string*>(_default_code_);
+    ::std::string* temp = port_;
+    port_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
 }
-inline void UserData::set_allocated_code(::std::string* code) {
-  if (code_ != _default_code_) {
-    delete code_;
+inline void UserData::set_allocated_port(::std::string* port) {
+  if (port_ != &::google::protobuf::internal::kEmptyString) {
+    delete port_;
   }
-  if (code) {
-    set_has_code();
-    code_ = code;
+  if (port) {
+    set_has_port();
+    port_ = port;
   } else {
-    clear_has_code();
-    code_ = const_cast< ::std::string*>(_default_code_);
+    clear_has_port();
+    port_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional bytes key = 5;
+inline bool UserData::has_key() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void UserData::set_has_key() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void UserData::clear_has_key() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void UserData::clear_key() {
+  if (key_ != &::google::protobuf::internal::kEmptyString) {
+    key_->clear();
+  }
+  clear_has_key();
+}
+inline const ::std::string& UserData::key() const {
+  return *key_;
+}
+inline void UserData::set_key(const ::std::string& value) {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  key_->assign(value);
+}
+inline void UserData::set_key(const char* value) {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  key_->assign(value);
+}
+inline void UserData::set_key(const void* value, size_t size) {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  key_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* UserData::mutable_key() {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  return key_;
+}
+inline ::std::string* UserData::release_key() {
+  clear_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = key_;
+    key_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void UserData::set_allocated_key(::std::string* key) {
+  if (key_ != &::google::protobuf::internal::kEmptyString) {
+    delete key_;
+  }
+  if (key) {
+    set_has_key();
+    key_ = key;
+  } else {
+    clear_has_key();
+    key_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional bytes date = 4 [default = "NONE"];
+inline bool UserData::has_date() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void UserData::set_has_date() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void UserData::clear_has_date() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void UserData::clear_date() {
+  if (date_ != _default_date_) {
+    date_->assign(*_default_date_);
+  }
+  clear_has_date();
+}
+inline const ::std::string& UserData::date() const {
+  return *date_;
+}
+inline void UserData::set_date(const ::std::string& value) {
+  set_has_date();
+  if (date_ == _default_date_) {
+    date_ = new ::std::string;
+  }
+  date_->assign(value);
+}
+inline void UserData::set_date(const char* value) {
+  set_has_date();
+  if (date_ == _default_date_) {
+    date_ = new ::std::string;
+  }
+  date_->assign(value);
+}
+inline void UserData::set_date(const void* value, size_t size) {
+  set_has_date();
+  if (date_ == _default_date_) {
+    date_ = new ::std::string;
+  }
+  date_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* UserData::mutable_date() {
+  set_has_date();
+  if (date_ == _default_date_) {
+    date_ = new ::std::string(*_default_date_);
+  }
+  return date_;
+}
+inline ::std::string* UserData::release_date() {
+  clear_has_date();
+  if (date_ == _default_date_) {
+    return NULL;
+  } else {
+    ::std::string* temp = date_;
+    date_ = const_cast< ::std::string*>(_default_date_);
+    return temp;
+  }
+}
+inline void UserData::set_allocated_date(::std::string* date) {
+  if (date_ != _default_date_) {
+    delete date_;
+  }
+  if (date) {
+    set_has_date();
+    date_ = date;
+  } else {
+    clear_has_date();
+    date_ = const_cast< ::std::string*>(_default_date_);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// ExternalUserData
+
+// required bytes user = 1;
+inline bool ExternalUserData::has_user() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void ExternalUserData::set_has_user() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void ExternalUserData::clear_has_user() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void ExternalUserData::clear_user() {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    user_->clear();
+  }
+  clear_has_user();
+}
+inline const ::std::string& ExternalUserData::user() const {
+  return *user_;
+}
+inline void ExternalUserData::set_user(const ::std::string& value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void ExternalUserData::set_user(const char* value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void ExternalUserData::set_user(const void* value, size_t size) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ExternalUserData::mutable_user() {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  return user_;
+}
+inline ::std::string* ExternalUserData::release_user() {
+  clear_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = user_;
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void ExternalUserData::set_allocated_user(::std::string* user) {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    delete user_;
+  }
+  if (user) {
+    set_has_user();
+    user_ = user;
+  } else {
+    clear_has_user();
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes server = 2;
+inline bool ExternalUserData::has_server() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void ExternalUserData::set_has_server() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void ExternalUserData::clear_has_server() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void ExternalUserData::clear_server() {
+  if (server_ != &::google::protobuf::internal::kEmptyString) {
+    server_->clear();
+  }
+  clear_has_server();
+}
+inline const ::std::string& ExternalUserData::server() const {
+  return *server_;
+}
+inline void ExternalUserData::set_server(const ::std::string& value) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(value);
+}
+inline void ExternalUserData::set_server(const char* value) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(value);
+}
+inline void ExternalUserData::set_server(const void* value, size_t size) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ExternalUserData::mutable_server() {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  return server_;
+}
+inline ::std::string* ExternalUserData::release_server() {
+  clear_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = server_;
+    server_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void ExternalUserData::set_allocated_server(::std::string* server) {
+  if (server_ != &::google::protobuf::internal::kEmptyString) {
+    delete server_;
+  }
+  if (server) {
+    set_has_server();
+    server_ = server;
+  } else {
+    clear_has_server();
+    server_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes key = 3;
+inline bool ExternalUserData::has_key() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void ExternalUserData::set_has_key() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void ExternalUserData::clear_has_key() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void ExternalUserData::clear_key() {
+  if (key_ != &::google::protobuf::internal::kEmptyString) {
+    key_->clear();
+  }
+  clear_has_key();
+}
+inline const ::std::string& ExternalUserData::key() const {
+  return *key_;
+}
+inline void ExternalUserData::set_key(const ::std::string& value) {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  key_->assign(value);
+}
+inline void ExternalUserData::set_key(const char* value) {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  key_->assign(value);
+}
+inline void ExternalUserData::set_key(const void* value, size_t size) {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  key_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ExternalUserData::mutable_key() {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  return key_;
+}
+inline ::std::string* ExternalUserData::release_key() {
+  clear_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = key_;
+    key_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void ExternalUserData::set_allocated_key(::std::string* key) {
+  if (key_ != &::google::protobuf::internal::kEmptyString) {
+    delete key_;
+  }
+  if (key) {
+    set_has_key();
+    key_ = key;
+  } else {
+    clear_has_key();
+    key_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 
@@ -2082,29 +4585,1338 @@ inline void UserData::set_allocated_code(::std::string* code) {
 
 // UserDataBlock
 
-// repeated .rm.UserData friend = 1;
-inline int UserDataBlock::friend__size() const {
-  return friend__.size();
+// repeated .rm.UserData localFriend = 1;
+inline int UserDataBlock::localfriend_size() const {
+  return localfriend_.size();
 }
-inline void UserDataBlock::clear_friend_() {
-  friend__.Clear();
+inline void UserDataBlock::clear_localfriend() {
+  localfriend_.Clear();
 }
-inline const ::rm::UserData& UserDataBlock::friend_(int index) const {
-  return friend__.Get(index);
+inline const ::rm::UserData& UserDataBlock::localfriend(int index) const {
+  return localfriend_.Get(index);
 }
-inline ::rm::UserData* UserDataBlock::mutable_friend_(int index) {
-  return friend__.Mutable(index);
+inline ::rm::UserData* UserDataBlock::mutable_localfriend(int index) {
+  return localfriend_.Mutable(index);
 }
-inline ::rm::UserData* UserDataBlock::add_friend_() {
-  return friend__.Add();
+inline ::rm::UserData* UserDataBlock::add_localfriend() {
+  return localfriend_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::rm::UserData >&
-UserDataBlock::friend_() const {
-  return friend__;
+UserDataBlock::localfriend() const {
+  return localfriend_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::rm::UserData >*
-UserDataBlock::mutable_friend_() {
-  return &friend__;
+UserDataBlock::mutable_localfriend() {
+  return &localfriend_;
+}
+
+// repeated .rm.ExternalUserData externalFriend = 2;
+inline int UserDataBlock::externalfriend_size() const {
+  return externalfriend_.size();
+}
+inline void UserDataBlock::clear_externalfriend() {
+  externalfriend_.Clear();
+}
+inline const ::rm::ExternalUserData& UserDataBlock::externalfriend(int index) const {
+  return externalfriend_.Get(index);
+}
+inline ::rm::ExternalUserData* UserDataBlock::mutable_externalfriend(int index) {
+  return externalfriend_.Mutable(index);
+}
+inline ::rm::ExternalUserData* UserDataBlock::add_externalfriend() {
+  return externalfriend_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::rm::ExternalUserData >&
+UserDataBlock::externalfriend() const {
+  return externalfriend_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::rm::ExternalUserData >*
+UserDataBlock::mutable_externalfriend() {
+  return &externalfriend_;
+}
+
+// -------------------------------------------------------------------
+
+// User
+
+// required bytes user = 1;
+inline bool User::has_user() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void User::set_has_user() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void User::clear_has_user() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void User::clear_user() {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    user_->clear();
+  }
+  clear_has_user();
+}
+inline const ::std::string& User::user() const {
+  return *user_;
+}
+inline void User::set_user(const ::std::string& value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void User::set_user(const char* value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void User::set_user(const void* value, size_t size) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* User::mutable_user() {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  return user_;
+}
+inline ::std::string* User::release_user() {
+  clear_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = user_;
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void User::set_allocated_user(::std::string* user) {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    delete user_;
+  }
+  if (user) {
+    set_has_user();
+    user_ = user;
+  } else {
+    clear_has_user();
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes server = 2;
+inline bool User::has_server() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void User::set_has_server() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void User::clear_has_server() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void User::clear_server() {
+  if (server_ != &::google::protobuf::internal::kEmptyString) {
+    server_->clear();
+  }
+  clear_has_server();
+}
+inline const ::std::string& User::server() const {
+  return *server_;
+}
+inline void User::set_server(const ::std::string& value) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(value);
+}
+inline void User::set_server(const char* value) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(value);
+}
+inline void User::set_server(const void* value, size_t size) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* User::mutable_server() {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  return server_;
+}
+inline ::std::string* User::release_server() {
+  clear_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = server_;
+    server_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void User::set_allocated_server(::std::string* server) {
+  if (server_ != &::google::protobuf::internal::kEmptyString) {
+    delete server_;
+  }
+  if (server) {
+    set_has_server();
+    server_ = server;
+  } else {
+    clear_has_server();
+    server_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional bytes ip = 3;
+inline bool User::has_ip() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void User::set_has_ip() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void User::clear_has_ip() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void User::clear_ip() {
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    ip_->clear();
+  }
+  clear_has_ip();
+}
+inline const ::std::string& User::ip() const {
+  return *ip_;
+}
+inline void User::set_ip(const ::std::string& value) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void User::set_ip(const char* value) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void User::set_ip(const void* value, size_t size) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* User::mutable_ip() {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  return ip_;
+}
+inline ::std::string* User::release_ip() {
+  clear_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = ip_;
+    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void User::set_allocated_ip(::std::string* ip) {
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    delete ip_;
+  }
+  if (ip) {
+    set_has_ip();
+    ip_ = ip;
+  } else {
+    clear_has_ip();
+    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional bytes port = 4;
+inline bool User::has_port() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void User::set_has_port() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void User::clear_has_port() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void User::clear_port() {
+  if (port_ != &::google::protobuf::internal::kEmptyString) {
+    port_->clear();
+  }
+  clear_has_port();
+}
+inline const ::std::string& User::port() const {
+  return *port_;
+}
+inline void User::set_port(const ::std::string& value) {
+  set_has_port();
+  if (port_ == &::google::protobuf::internal::kEmptyString) {
+    port_ = new ::std::string;
+  }
+  port_->assign(value);
+}
+inline void User::set_port(const char* value) {
+  set_has_port();
+  if (port_ == &::google::protobuf::internal::kEmptyString) {
+    port_ = new ::std::string;
+  }
+  port_->assign(value);
+}
+inline void User::set_port(const void* value, size_t size) {
+  set_has_port();
+  if (port_ == &::google::protobuf::internal::kEmptyString) {
+    port_ = new ::std::string;
+  }
+  port_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* User::mutable_port() {
+  set_has_port();
+  if (port_ == &::google::protobuf::internal::kEmptyString) {
+    port_ = new ::std::string;
+  }
+  return port_;
+}
+inline ::std::string* User::release_port() {
+  clear_has_port();
+  if (port_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = port_;
+    port_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void User::set_allocated_port(::std::string* port) {
+  if (port_ != &::google::protobuf::internal::kEmptyString) {
+    delete port_;
+  }
+  if (port) {
+    set_has_port();
+    port_ = port;
+  } else {
+    clear_has_port();
+    port_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// ServerStatus
+
+// required bytes registeringStatus = 1;
+inline bool ServerStatus::has_registeringstatus() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void ServerStatus::set_has_registeringstatus() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void ServerStatus::clear_has_registeringstatus() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void ServerStatus::clear_registeringstatus() {
+  if (registeringstatus_ != &::google::protobuf::internal::kEmptyString) {
+    registeringstatus_->clear();
+  }
+  clear_has_registeringstatus();
+}
+inline const ::std::string& ServerStatus::registeringstatus() const {
+  return *registeringstatus_;
+}
+inline void ServerStatus::set_registeringstatus(const ::std::string& value) {
+  set_has_registeringstatus();
+  if (registeringstatus_ == &::google::protobuf::internal::kEmptyString) {
+    registeringstatus_ = new ::std::string;
+  }
+  registeringstatus_->assign(value);
+}
+inline void ServerStatus::set_registeringstatus(const char* value) {
+  set_has_registeringstatus();
+  if (registeringstatus_ == &::google::protobuf::internal::kEmptyString) {
+    registeringstatus_ = new ::std::string;
+  }
+  registeringstatus_->assign(value);
+}
+inline void ServerStatus::set_registeringstatus(const void* value, size_t size) {
+  set_has_registeringstatus();
+  if (registeringstatus_ == &::google::protobuf::internal::kEmptyString) {
+    registeringstatus_ = new ::std::string;
+  }
+  registeringstatus_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ServerStatus::mutable_registeringstatus() {
+  set_has_registeringstatus();
+  if (registeringstatus_ == &::google::protobuf::internal::kEmptyString) {
+    registeringstatus_ = new ::std::string;
+  }
+  return registeringstatus_;
+}
+inline ::std::string* ServerStatus::release_registeringstatus() {
+  clear_has_registeringstatus();
+  if (registeringstatus_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = registeringstatus_;
+    registeringstatus_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void ServerStatus::set_allocated_registeringstatus(::std::string* registeringstatus) {
+  if (registeringstatus_ != &::google::protobuf::internal::kEmptyString) {
+    delete registeringstatus_;
+  }
+  if (registeringstatus) {
+    set_has_registeringstatus();
+    registeringstatus_ = registeringstatus;
+  } else {
+    clear_has_registeringstatus();
+    registeringstatus_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes generalStatus = 2;
+inline bool ServerStatus::has_generalstatus() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void ServerStatus::set_has_generalstatus() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void ServerStatus::clear_has_generalstatus() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void ServerStatus::clear_generalstatus() {
+  if (generalstatus_ != &::google::protobuf::internal::kEmptyString) {
+    generalstatus_->clear();
+  }
+  clear_has_generalstatus();
+}
+inline const ::std::string& ServerStatus::generalstatus() const {
+  return *generalstatus_;
+}
+inline void ServerStatus::set_generalstatus(const ::std::string& value) {
+  set_has_generalstatus();
+  if (generalstatus_ == &::google::protobuf::internal::kEmptyString) {
+    generalstatus_ = new ::std::string;
+  }
+  generalstatus_->assign(value);
+}
+inline void ServerStatus::set_generalstatus(const char* value) {
+  set_has_generalstatus();
+  if (generalstatus_ == &::google::protobuf::internal::kEmptyString) {
+    generalstatus_ = new ::std::string;
+  }
+  generalstatus_->assign(value);
+}
+inline void ServerStatus::set_generalstatus(const void* value, size_t size) {
+  set_has_generalstatus();
+  if (generalstatus_ == &::google::protobuf::internal::kEmptyString) {
+    generalstatus_ = new ::std::string;
+  }
+  generalstatus_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ServerStatus::mutable_generalstatus() {
+  set_has_generalstatus();
+  if (generalstatus_ == &::google::protobuf::internal::kEmptyString) {
+    generalstatus_ = new ::std::string;
+  }
+  return generalstatus_;
+}
+inline ::std::string* ServerStatus::release_generalstatus() {
+  clear_has_generalstatus();
+  if (generalstatus_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = generalstatus_;
+    generalstatus_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void ServerStatus::set_allocated_generalstatus(::std::string* generalstatus) {
+  if (generalstatus_ != &::google::protobuf::internal::kEmptyString) {
+    delete generalstatus_;
+  }
+  if (generalstatus) {
+    set_has_generalstatus();
+    generalstatus_ = generalstatus;
+  } else {
+    clear_has_generalstatus();
+    generalstatus_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes avaliability = 3;
+inline bool ServerStatus::has_avaliability() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void ServerStatus::set_has_avaliability() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void ServerStatus::clear_has_avaliability() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void ServerStatus::clear_avaliability() {
+  if (avaliability_ != &::google::protobuf::internal::kEmptyString) {
+    avaliability_->clear();
+  }
+  clear_has_avaliability();
+}
+inline const ::std::string& ServerStatus::avaliability() const {
+  return *avaliability_;
+}
+inline void ServerStatus::set_avaliability(const ::std::string& value) {
+  set_has_avaliability();
+  if (avaliability_ == &::google::protobuf::internal::kEmptyString) {
+    avaliability_ = new ::std::string;
+  }
+  avaliability_->assign(value);
+}
+inline void ServerStatus::set_avaliability(const char* value) {
+  set_has_avaliability();
+  if (avaliability_ == &::google::protobuf::internal::kEmptyString) {
+    avaliability_ = new ::std::string;
+  }
+  avaliability_->assign(value);
+}
+inline void ServerStatus::set_avaliability(const void* value, size_t size) {
+  set_has_avaliability();
+  if (avaliability_ == &::google::protobuf::internal::kEmptyString) {
+    avaliability_ = new ::std::string;
+  }
+  avaliability_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ServerStatus::mutable_avaliability() {
+  set_has_avaliability();
+  if (avaliability_ == &::google::protobuf::internal::kEmptyString) {
+    avaliability_ = new ::std::string;
+  }
+  return avaliability_;
+}
+inline ::std::string* ServerStatus::release_avaliability() {
+  clear_has_avaliability();
+  if (avaliability_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = avaliability_;
+    avaliability_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void ServerStatus::set_allocated_avaliability(::std::string* avaliability) {
+  if (avaliability_ != &::google::protobuf::internal::kEmptyString) {
+    delete avaliability_;
+  }
+  if (avaliability) {
+    set_has_avaliability();
+    avaliability_ = avaliability;
+  } else {
+    clear_has_avaliability();
+    avaliability_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// ServerResponse
+
+// required bytes code = 1;
+inline bool ServerResponse::has_code() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void ServerResponse::set_has_code() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void ServerResponse::clear_has_code() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void ServerResponse::clear_code() {
+  if (code_ != &::google::protobuf::internal::kEmptyString) {
+    code_->clear();
+  }
+  clear_has_code();
+}
+inline const ::std::string& ServerResponse::code() const {
+  return *code_;
+}
+inline void ServerResponse::set_code(const ::std::string& value) {
+  set_has_code();
+  if (code_ == &::google::protobuf::internal::kEmptyString) {
+    code_ = new ::std::string;
+  }
+  code_->assign(value);
+}
+inline void ServerResponse::set_code(const char* value) {
+  set_has_code();
+  if (code_ == &::google::protobuf::internal::kEmptyString) {
+    code_ = new ::std::string;
+  }
+  code_->assign(value);
+}
+inline void ServerResponse::set_code(const void* value, size_t size) {
+  set_has_code();
+  if (code_ == &::google::protobuf::internal::kEmptyString) {
+    code_ = new ::std::string;
+  }
+  code_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ServerResponse::mutable_code() {
+  set_has_code();
+  if (code_ == &::google::protobuf::internal::kEmptyString) {
+    code_ = new ::std::string;
+  }
+  return code_;
+}
+inline ::std::string* ServerResponse::release_code() {
+  clear_has_code();
+  if (code_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = code_;
+    code_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void ServerResponse::set_allocated_code(::std::string* code) {
+  if (code_ != &::google::protobuf::internal::kEmptyString) {
+    delete code_;
+  }
+  if (code) {
+    set_has_code();
+    code_ = code;
+  } else {
+    clear_has_code();
+    code_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional bytes description = 2;
+inline bool ServerResponse::has_description() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void ServerResponse::set_has_description() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void ServerResponse::clear_has_description() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void ServerResponse::clear_description() {
+  if (description_ != &::google::protobuf::internal::kEmptyString) {
+    description_->clear();
+  }
+  clear_has_description();
+}
+inline const ::std::string& ServerResponse::description() const {
+  return *description_;
+}
+inline void ServerResponse::set_description(const ::std::string& value) {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::kEmptyString) {
+    description_ = new ::std::string;
+  }
+  description_->assign(value);
+}
+inline void ServerResponse::set_description(const char* value) {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::kEmptyString) {
+    description_ = new ::std::string;
+  }
+  description_->assign(value);
+}
+inline void ServerResponse::set_description(const void* value, size_t size) {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::kEmptyString) {
+    description_ = new ::std::string;
+  }
+  description_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ServerResponse::mutable_description() {
+  set_has_description();
+  if (description_ == &::google::protobuf::internal::kEmptyString) {
+    description_ = new ::std::string;
+  }
+  return description_;
+}
+inline ::std::string* ServerResponse::release_description() {
+  clear_has_description();
+  if (description_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = description_;
+    description_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void ServerResponse::set_allocated_description(::std::string* description) {
+  if (description_ != &::google::protobuf::internal::kEmptyString) {
+    delete description_;
+  }
+  if (description) {
+    set_has_description();
+    description_ = description;
+  } else {
+    clear_has_description();
+    description_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// RegisteringData
+
+// required bytes uname = 1;
+inline bool RegisteringData::has_uname() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RegisteringData::set_has_uname() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RegisteringData::clear_has_uname() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RegisteringData::clear_uname() {
+  if (uname_ != &::google::protobuf::internal::kEmptyString) {
+    uname_->clear();
+  }
+  clear_has_uname();
+}
+inline const ::std::string& RegisteringData::uname() const {
+  return *uname_;
+}
+inline void RegisteringData::set_uname(const ::std::string& value) {
+  set_has_uname();
+  if (uname_ == &::google::protobuf::internal::kEmptyString) {
+    uname_ = new ::std::string;
+  }
+  uname_->assign(value);
+}
+inline void RegisteringData::set_uname(const char* value) {
+  set_has_uname();
+  if (uname_ == &::google::protobuf::internal::kEmptyString) {
+    uname_ = new ::std::string;
+  }
+  uname_->assign(value);
+}
+inline void RegisteringData::set_uname(const void* value, size_t size) {
+  set_has_uname();
+  if (uname_ == &::google::protobuf::internal::kEmptyString) {
+    uname_ = new ::std::string;
+  }
+  uname_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* RegisteringData::mutable_uname() {
+  set_has_uname();
+  if (uname_ == &::google::protobuf::internal::kEmptyString) {
+    uname_ = new ::std::string;
+  }
+  return uname_;
+}
+inline ::std::string* RegisteringData::release_uname() {
+  clear_has_uname();
+  if (uname_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = uname_;
+    uname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void RegisteringData::set_allocated_uname(::std::string* uname) {
+  if (uname_ != &::google::protobuf::internal::kEmptyString) {
+    delete uname_;
+  }
+  if (uname) {
+    set_has_uname();
+    uname_ = uname;
+  } else {
+    clear_has_uname();
+    uname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes email = 2;
+inline bool RegisteringData::has_email() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void RegisteringData::set_has_email() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void RegisteringData::clear_has_email() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void RegisteringData::clear_email() {
+  if (email_ != &::google::protobuf::internal::kEmptyString) {
+    email_->clear();
+  }
+  clear_has_email();
+}
+inline const ::std::string& RegisteringData::email() const {
+  return *email_;
+}
+inline void RegisteringData::set_email(const ::std::string& value) {
+  set_has_email();
+  if (email_ == &::google::protobuf::internal::kEmptyString) {
+    email_ = new ::std::string;
+  }
+  email_->assign(value);
+}
+inline void RegisteringData::set_email(const char* value) {
+  set_has_email();
+  if (email_ == &::google::protobuf::internal::kEmptyString) {
+    email_ = new ::std::string;
+  }
+  email_->assign(value);
+}
+inline void RegisteringData::set_email(const void* value, size_t size) {
+  set_has_email();
+  if (email_ == &::google::protobuf::internal::kEmptyString) {
+    email_ = new ::std::string;
+  }
+  email_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* RegisteringData::mutable_email() {
+  set_has_email();
+  if (email_ == &::google::protobuf::internal::kEmptyString) {
+    email_ = new ::std::string;
+  }
+  return email_;
+}
+inline ::std::string* RegisteringData::release_email() {
+  clear_has_email();
+  if (email_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = email_;
+    email_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void RegisteringData::set_allocated_email(::std::string* email) {
+  if (email_ != &::google::protobuf::internal::kEmptyString) {
+    delete email_;
+  }
+  if (email) {
+    set_has_email();
+    email_ = email;
+  } else {
+    clear_has_email();
+    email_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes password = 3;
+inline bool RegisteringData::has_password() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RegisteringData::set_has_password() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RegisteringData::clear_has_password() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RegisteringData::clear_password() {
+  if (password_ != &::google::protobuf::internal::kEmptyString) {
+    password_->clear();
+  }
+  clear_has_password();
+}
+inline const ::std::string& RegisteringData::password() const {
+  return *password_;
+}
+inline void RegisteringData::set_password(const ::std::string& value) {
+  set_has_password();
+  if (password_ == &::google::protobuf::internal::kEmptyString) {
+    password_ = new ::std::string;
+  }
+  password_->assign(value);
+}
+inline void RegisteringData::set_password(const char* value) {
+  set_has_password();
+  if (password_ == &::google::protobuf::internal::kEmptyString) {
+    password_ = new ::std::string;
+  }
+  password_->assign(value);
+}
+inline void RegisteringData::set_password(const void* value, size_t size) {
+  set_has_password();
+  if (password_ == &::google::protobuf::internal::kEmptyString) {
+    password_ = new ::std::string;
+  }
+  password_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* RegisteringData::mutable_password() {
+  set_has_password();
+  if (password_ == &::google::protobuf::internal::kEmptyString) {
+    password_ = new ::std::string;
+  }
+  return password_;
+}
+inline ::std::string* RegisteringData::release_password() {
+  clear_has_password();
+  if (password_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = password_;
+    password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void RegisteringData::set_allocated_password(::std::string* password) {
+  if (password_ != &::google::protobuf::internal::kEmptyString) {
+    delete password_;
+  }
+  if (password) {
+    set_has_password();
+    password_ = password;
+  } else {
+    clear_has_password();
+    password_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// chatAuth
+
+// required bytes user = 1;
+inline bool chatAuth::has_user() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void chatAuth::set_has_user() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void chatAuth::clear_has_user() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void chatAuth::clear_user() {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    user_->clear();
+  }
+  clear_has_user();
+}
+inline const ::std::string& chatAuth::user() const {
+  return *user_;
+}
+inline void chatAuth::set_user(const ::std::string& value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void chatAuth::set_user(const char* value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void chatAuth::set_user(const void* value, size_t size) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* chatAuth::mutable_user() {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  return user_;
+}
+inline ::std::string* chatAuth::release_user() {
+  clear_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = user_;
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void chatAuth::set_allocated_user(::std::string* user) {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    delete user_;
+  }
+  if (user) {
+    set_has_user();
+    user_ = user;
+  } else {
+    clear_has_user();
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes server = 2;
+inline bool chatAuth::has_server() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void chatAuth::set_has_server() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void chatAuth::clear_has_server() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void chatAuth::clear_server() {
+  if (server_ != &::google::protobuf::internal::kEmptyString) {
+    server_->clear();
+  }
+  clear_has_server();
+}
+inline const ::std::string& chatAuth::server() const {
+  return *server_;
+}
+inline void chatAuth::set_server(const ::std::string& value) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(value);
+}
+inline void chatAuth::set_server(const char* value) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(value);
+}
+inline void chatAuth::set_server(const void* value, size_t size) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* chatAuth::mutable_server() {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  return server_;
+}
+inline ::std::string* chatAuth::release_server() {
+  clear_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = server_;
+    server_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void chatAuth::set_allocated_server(::std::string* server) {
+  if (server_ != &::google::protobuf::internal::kEmptyString) {
+    delete server_;
+  }
+  if (server) {
+    set_has_server();
+    server_ = server;
+  } else {
+    clear_has_server();
+    server_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional bytes key = 3;
+inline bool chatAuth::has_key() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void chatAuth::set_has_key() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void chatAuth::clear_has_key() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void chatAuth::clear_key() {
+  if (key_ != &::google::protobuf::internal::kEmptyString) {
+    key_->clear();
+  }
+  clear_has_key();
+}
+inline const ::std::string& chatAuth::key() const {
+  return *key_;
+}
+inline void chatAuth::set_key(const ::std::string& value) {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  key_->assign(value);
+}
+inline void chatAuth::set_key(const char* value) {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  key_->assign(value);
+}
+inline void chatAuth::set_key(const void* value, size_t size) {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  key_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* chatAuth::mutable_key() {
+  set_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    key_ = new ::std::string;
+  }
+  return key_;
+}
+inline ::std::string* chatAuth::release_key() {
+  clear_has_key();
+  if (key_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = key_;
+    key_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void chatAuth::set_allocated_key(::std::string* key) {
+  if (key_ != &::google::protobuf::internal::kEmptyString) {
+    delete key_;
+  }
+  if (key) {
+    set_has_key();
+    key_ = key;
+  } else {
+    clear_has_key();
+    key_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional bytes keyAlt = 4;
+inline bool chatAuth::has_keyalt() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void chatAuth::set_has_keyalt() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void chatAuth::clear_has_keyalt() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void chatAuth::clear_keyalt() {
+  if (keyalt_ != &::google::protobuf::internal::kEmptyString) {
+    keyalt_->clear();
+  }
+  clear_has_keyalt();
+}
+inline const ::std::string& chatAuth::keyalt() const {
+  return *keyalt_;
+}
+inline void chatAuth::set_keyalt(const ::std::string& value) {
+  set_has_keyalt();
+  if (keyalt_ == &::google::protobuf::internal::kEmptyString) {
+    keyalt_ = new ::std::string;
+  }
+  keyalt_->assign(value);
+}
+inline void chatAuth::set_keyalt(const char* value) {
+  set_has_keyalt();
+  if (keyalt_ == &::google::protobuf::internal::kEmptyString) {
+    keyalt_ = new ::std::string;
+  }
+  keyalt_->assign(value);
+}
+inline void chatAuth::set_keyalt(const void* value, size_t size) {
+  set_has_keyalt();
+  if (keyalt_ == &::google::protobuf::internal::kEmptyString) {
+    keyalt_ = new ::std::string;
+  }
+  keyalt_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* chatAuth::mutable_keyalt() {
+  set_has_keyalt();
+  if (keyalt_ == &::google::protobuf::internal::kEmptyString) {
+    keyalt_ = new ::std::string;
+  }
+  return keyalt_;
+}
+inline ::std::string* chatAuth::release_keyalt() {
+  clear_has_keyalt();
+  if (keyalt_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = keyalt_;
+    keyalt_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void chatAuth::set_allocated_keyalt(::std::string* keyalt) {
+  if (keyalt_ != &::google::protobuf::internal::kEmptyString) {
+    delete keyalt_;
+  }
+  if (keyalt) {
+    set_has_keyalt();
+    keyalt_ = keyalt;
+  } else {
+    clear_has_keyalt();
+    keyalt_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// chatTextMsg
+
+// required bytes user = 1;
+inline bool chatTextMsg::has_user() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void chatTextMsg::set_has_user() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void chatTextMsg::clear_has_user() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void chatTextMsg::clear_user() {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    user_->clear();
+  }
+  clear_has_user();
+}
+inline const ::std::string& chatTextMsg::user() const {
+  return *user_;
+}
+inline void chatTextMsg::set_user(const ::std::string& value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void chatTextMsg::set_user(const char* value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void chatTextMsg::set_user(const void* value, size_t size) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* chatTextMsg::mutable_user() {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  return user_;
+}
+inline ::std::string* chatTextMsg::release_user() {
+  clear_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = user_;
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void chatTextMsg::set_allocated_user(::std::string* user) {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    delete user_;
+  }
+  if (user) {
+    set_has_user();
+    user_ = user;
+  } else {
+    clear_has_user();
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes msg = 2;
+inline bool chatTextMsg::has_msg() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void chatTextMsg::set_has_msg() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void chatTextMsg::clear_has_msg() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void chatTextMsg::clear_msg() {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    msg_->clear();
+  }
+  clear_has_msg();
+}
+inline const ::std::string& chatTextMsg::msg() const {
+  return *msg_;
+}
+inline void chatTextMsg::set_msg(const ::std::string& value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void chatTextMsg::set_msg(const char* value) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(value);
+}
+inline void chatTextMsg::set_msg(const void* value, size_t size) {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  msg_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* chatTextMsg::mutable_msg() {
+  set_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    msg_ = new ::std::string;
+  }
+  return msg_;
+}
+inline ::std::string* chatTextMsg::release_msg() {
+  clear_has_msg();
+  if (msg_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = msg_;
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void chatTextMsg::set_allocated_msg(::std::string* msg) {
+  if (msg_ != &::google::protobuf::internal::kEmptyString) {
+    delete msg_;
+  }
+  if (msg) {
+    set_has_msg();
+    msg_ = msg;
+  } else {
+    clear_has_msg();
+    msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
 }
 
 

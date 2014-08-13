@@ -1,13 +1,27 @@
 #include <QDebug>
+#include <QHostAddress>
+#include <QTime>
 #include "TcpServerThread.h"
 #include "Proto/RedMalk.pb.h"
+#include "TcpRmRegisterer.h"
+#include "TcpRmConnector.h"
+#include "TcpRmInvitationListener.h"
+#include "TcpRmInvitationValidator.h"
+#include "TcpRmPersonalNoticesAdmin.h"
+#include "TcpRmInvitationEnder.h"
+#include "TcpRmInvitationResponser.h"
+#include "TcpRmLocalFriendServer.h"
+#include "TcpRmFriendSender.h"
+
 using namespace rm;
 
-TcpServerThread::TcpServerThread(qintptr ID, RsaKeys *k, CustomRsa *rsa)
-{
+TcpServerThread::TcpServerThread(qintptr ID, RsaKeys *k, CustomRsa *rsa, int serverMode){
+    this->serverMode = serverMode;
+    rm = NULL;
     crsa = rsa;
     keys = k;
     this->socketDescriptor = ID;
+    blocked = false;
     state =0;
 }
 
@@ -21,30 +35,33 @@ void TcpServerThread::work()
     }
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()), Qt::DirectConnection);
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+    //Nada más crear el socket, enviamos al cliente nuestra clave RSA pública para
+    //evitar pasar ningún tipo de información sin cifrar.
     QString aux = QString::number(keys->n)+" "+QString::number(keys->e);
     sendMsg(aux.toUtf8().constData());
-
 }
 
 
 void TcpServerThread::readyRead()
 {
     switch(state){
+    //Si estamos en el estado 0, quiere decir que no hemos recibudo aun las claves del
+    //cliente
     case 0:{
-        std::string reciever = obtenerMensaje();
+        std::string reciever = getNetworkString();
         QString aux = QString::fromStdString(reciever);
         //divido el mensaje en las 2 claves y las paso a uint
         QStringList list;
         list = aux.split(QRegExp("\\s+"));
         remoteKeys.n=list[0].toUInt();
         remoteKeys.e=list[1].toUInt();
-        //Gnero una clave para blowfish
-        bfKey.a=rand()%(99-10)+10;
-        bfKey.b=rand()%(99-10)+10;
-        bfKey.c=rand()%(99-10)+10;
-        bfKey.d=rand()%(99-10)+10;
-        bfKey.e=rand()%(99-10)+10;
-        bfKey.f=rand()%(99-10)+10;
+        //Ahora que tngo las claves del cliente, genero una clave para blowfish
+        bfKey.a=rand()%25+65;
+        bfKey.b=rand()%25+65;
+        bfKey.c=rand()%25+65;
+        bfKey.d=rand()%25+65;
+        bfKey.e=rand()%25+65;
+        bfKey.f=rand()%25+65;
         //la cifro, la firmo y la envío
         crsa->cypherSymmetricKey(remoteKeys,&bfKey);
         unsigned int sign = crsa->cypherSignature(7273);
@@ -64,47 +81,156 @@ void TcpServerThread::readyRead()
         break;
     }
     case 1:{
-        //Recibimos los datos de versión
-        std::string aux = obtenerMensaje();
+        //Escuchamos el tipo de operación que necesita realizar el cliente
+        std::string aux = getNetworkString();
         std::string datoDescifrado;
-        VersionPackage version;
-        //std::string sVersion = aux.toUtf8().constData();
-        version.ParseFromString(aux);
-        bf->Decrypt(&datoDescifrado, version.system());
-        version.set_system(datoDescifrado);
-        bf->Decrypt(&datoDescifrado, version.so());
-        version.set_so(datoDescifrado);
-        bf->Decrypt(&datoDescifrado, version.concreteversion());
-        version.set_concreteversion(datoDescifrado);
-        qDebug()<<QString::fromStdString(version.system());
-        qDebug()<<QString::fromStdString(version.so());
-        qDebug()<<QString::fromStdString(version.concreteversion());
+        bf->Decrypt(&datoDescifrado,aux);
+        try{            
+            int type = atoi(datoDescifrado.c_str());
+            QTime time = QTime::currentTime();
+            QString timeString = time.toString();
+            qDebug()<<timeString+"----------------------------------------------------------------------------------";
+            qDebug()<<"Un cliente se conecta en busca de una operación de tipo "+QString::fromStdString(datoDescifrado.c_str());
+            switch(type){
+                case 0:{
+                    qDebug()<<"Quiere registrarse";
+                    state =2;
+                    rm = new TcpRmRegisterer();
+                    rm->setSocket(this, bf);
+                    break;
+                }
+                case 1:{
+                    qDebug()<<"Quiere logearse";
+                    state=2;
+                    rm = new TcpRmConnector();
+                    rm->setSocket(this, bf);
+                    break;
+                }
+                case 2:{
+                    state=2;
+                    qDebug()<<"Quiere invitar a un nuevo amigo";
+                    rm = new TcpRmInvitationListener();
+                    rm->setSocket(this, bf);
+                    break;
+                }
+                case 3:{
+                    qDebug()<<"Es otro server que pide que valide una invitación";
+                    state=2;
+                    rm = new TcpRmInvitationValidator();
+                    rm->setSocket(this, bf);
+                    break;
+                }
+                case 4:{
+                    qDebug()<<"Quiere que le facilite la info de sus amigos en este server";
+                    state=2;
+                    rm = new TcpRmFriendSender();
+                    rm->setSocket(this, bf);
+                    break;
+                }
+                case 5:{//Peticion de amigos a server local
+                    qDebug()<<"Es un usuario de este server, quiere quele facilite sus amigos locales";
+                    state=2;
+                    rm = new TcpRmLocalFriendServer();
+                    rm->setSocket(this, bf);
+                    break;
+                }
+                case 6:{
+                    qDebug()<<"Es otro server que nos confirma una invitación válida";
+                    state=2;
+                    rm = new TcpRmInvitationEnder();
+                    rm->setSocket(this, bf);
+                    break;
+                }
+                case 8:{
+                    qDebug()<<"Quiere responder a una noticia enviada";
+                    state=2;
+                    rm = new TcpRmPersonalNoticesAdmin();
+                    rm->setSocket(this, bf);
+                    break;
+                }                
+                case 9:{
+                    qDebug()<<"Otro server nos envía la respuesta auna invitación de amistad";
+                    state=2;
+                    rm = new TcpRmInvitationResponser();
+                    rm->setSocket(this, bf);
+                    break;
+                }
+                default:{
+                    socket->disconnectFromHost();
+                    qDebug()<<"Número de operación erroneo";
+                    break;
+                }
+            }
+        }catch(int e){
+            socket->disconnectFromHost();
+            qDebug()<<"No fue posible determinar la operación, desconectado";
+        }
+        break;
+    }
+    case 2:{
+        std::string type = socket->read(3).constData();
+        rm->awake(type, socket->readAll());
         break;
     }
     }
-
-
 }
 
-std::string TcpServerThread::obtenerMensaje(){
+void TcpServerThread::blockThread(bool value){
+    this->blocked = value;
+}
+
+void TcpServerThread::changeState(int type, QByteArray data, QString destinatary){
+    emit clientThreadNeeded(type, data, destinatary);
+    socket->disconnectFromHost();
+}
+
+void TcpServerThread::changeState(int type, QByteArray data){
+    emit clientThreadNeeded(type, data);
+    socket->disconnectFromHost();
+}
+
+std::string TcpServerThread::getNetworkString(){
     QByteArray receiveArray;
-    //TcpDataStruct structCall;
-    QString aux;
-    const char* aux2;
+    const char* aux;
     receiveArray.append(socket->readAll());
-    QDataStream in(&receiveArray,QIODevice::ReadOnly);
-    in.setVersion(QDataStream::Qt_4_8);
-    in >> aux;
-    aux2=receiveArray.constData();
-    return aux2;
+    aux=receiveArray.constData();
+    return aux;
 }
 
 void TcpServerThread::sendMsg(std::string msg){
     socket->write(msg.c_str());
 }
 
+void TcpServerThread::sendExternalMsg(QByteArray byteArray){
+    socket->write(byteArray);
+}
+
+void TcpServerThread::closeConnection(){
+    socket->disconnectFromHost();
+}
+
+int TcpServerThread::getServerMode(){
+    return serverMode;
+}
+
+QString TcpServerThread::getClientIp(){
+    return socket->peerAddress().toString();
+}
+
 void TcpServerThread::disconnected()
 {
+
+    if(bf != NULL){
+        delete(bf);
+        bf = NULL;
+    }
+    if(rm != NULL){
+        delete(rm);
+        rm = NULL;
+    }
     socket->deleteLater();
-    emit finished();
+    socket = NULL;
+    if (!this->blocked){
+        emit finished();
+    }
 }

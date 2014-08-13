@@ -12,10 +12,13 @@ class TcpServer : public QTcpServer
     Q_OBJECT
 public:
     explicit TcpServer(QObject *parent = 0);
-    void startServer();
+    bool startServer();
+    void setServerMode(int i);
+    int getServerMode();
 
 public slots:
-    void threadFinished();
+    void clientThreadNeeded(int type, QByteArray data, QString destinatary);
+    void clientThreadNeeded(int type, QByteArray data);
 
 protected:
     void incomingConnection(qintptr socketDescriptor);
@@ -23,6 +26,7 @@ protected:
 private:
     RsaKeys keysS;
     CustomRsa* crsa;
+    int serverMode;
 };
 
 #endif // TCPSERVER_H

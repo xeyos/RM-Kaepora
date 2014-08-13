@@ -112,7 +112,7 @@ unsigned int CustomRsa::cypherSignature(unsigned int sign){
 //*********************************************************************
 //***********Decypher block begin *************************************
 //*********************************************************************
-void CustomRsa::decypherSymmetricKey(BlowFishKey *symkey){
+void CustomRsa::decypherSymmetricKey(RsaKeys remoteKey, BlowFishKey *symkey){
     //Desciframos ahora con nuestra clave privada
     symkey->cypha = powMod(symkey->cypha, keys.n, keys.d);
     symkey->cyphb = powMod(symkey->cyphb, keys.n, keys.d);

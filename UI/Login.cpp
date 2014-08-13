@@ -19,10 +19,11 @@ logIn::~logIn()
 
 void logIn::on_buttonBox_accepted()
 {
-    pass = ui->txtPass->toPlainText();
+    pass = ui->txtPass->text();
     ifstream iSettings("Settings");
     if(iSettings){
         MainWindow *mw = new MainWindow(this);
+        mw->setService(service);
         mw->setPassword(pass);
         mw->show();
 
@@ -30,8 +31,13 @@ void logIn::on_buttonBox_accepted()
         iSettings.close();
         ConfigDialog *cfg = new ConfigDialog(this);
         cfg->setPass(pass);
+        cfg->setService(service);
         cfg->show();
     }
+}
+
+void logIn::setService(GUIService *service){
+    this->service = service;
 }
 
 void logIn::on_buttonBox_rejected()

@@ -8,7 +8,7 @@ public:
     CustomRsa();
     RsaKeys getKeys();
     void cypherSymmetricKey(RsaKeys remoteKey, BlowFishKey *symKey);
-    void decypherSymmetricKey(BlowFishKey *symkey);
+    void decypherSymmetricKey(RsaKeys remoteKey, BlowFishKey *symkey);
     unsigned int cypherSignature(unsigned int sign);
     unsigned int decypherSignature(RsaKeys remoteKey, unsigned int sign);
 
