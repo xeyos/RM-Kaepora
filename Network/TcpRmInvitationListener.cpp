@@ -50,7 +50,7 @@ void TcpRmInvitationListener::awake(std::string type, QByteArray byteArray){
         if(!db->testUser(invite.destinatary())){
             qDebug()<<"Que NO es un usuario de este server";
             server->blockThread(false);
-            this->server->disconnected();
+            this->server->closeConnection();
         }else{
             qDebug()<<"Que es un usuario de este server";
             QByteArray serialArray;
@@ -59,6 +59,6 @@ void TcpRmInvitationListener::awake(std::string type, QByteArray byteArray){
         }
     }catch(int i){
         server->blockThread(false);
-        this->server->disconnected();
+        this->server->closeConnection();
     }
 }

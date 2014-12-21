@@ -59,7 +59,6 @@ void TcpRmClient::handleHandshake(std::string message){
             }else{
                 qDebug()<<"firma del servidor remoto incorrecta";
                 socket->disconnectFromHost();
-                thread->disconnected();
             }
             state=0;
             handshake = false;
@@ -69,7 +68,6 @@ void TcpRmClient::handleHandshake(std::string message){
     }catch(int i){
         qDebug()<<"Se ha producido un error en el proceso de confirmación de invitación";
         socket->disconnectFromHost();
-        thread->disconnected();
     }
 }
 

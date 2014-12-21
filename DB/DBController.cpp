@@ -30,6 +30,14 @@ bool DBController::setAccessData(std::string dbname, std::string user, std::stri
     conn->prepare("confirmInvitationSent", "UPDATE friendnotices SET state = false, internaldataaux = $5 WHERE (destinatary=$1) AND (owner = $2) AND (type = $3) AND (ownerserver = $4)");
     conn->prepare("newExternalFriend", "INSERT INTO friendships (usera, userb, keya, keyb) VALUES ($1, $2, $3, $4)");
     conn->prepare("newLocalFriend", "INSERT INTO localfriendships (usera, userb, keya, keyb) VALUES ($1, $2, $3, $4)");
+    //Rooms
+    conn->prepare("testExistingRoom","SELECT * FROM rooms WHERE (roomname = $1) OR (owner = $2)");
+    conn->prepare("createChatRoom","INSERT INTO rooms (roomname, owner, password, permissions, accesspass) VALUES ($1, $2, $3, $4, $5)");
+    conn->prepare("getRoomData", "SELECT * FROM rooms WHERE (roomname = $1)");
+    conn->prepare("getRoomByOwner", "SELECT * FROM rooms WHERE owner = $1");
+    conn->prepare("removeChatRoom", "DELETE FROM rooms WHERE owner = $1");
+    conn->prepare("findClaimedRoom", "SELECT * FROM rooms WHERE roomname = $1 AND password = $2");
+    conn->prepare("claimRoom", "UPDATE rooms SET owner = $1 WHERE roomname = $2 AND password = $3");
     //test
     conn->prepare("testdb", "INSERT INTO cyphtest VALUES ($1,$2,$3,$4)");
     conn->prepare("searchtest","SELECT * from cyphtest");
@@ -198,19 +206,19 @@ rm::UserDataBlock DBController::getFriendList(std::string uname){
                     bf.Decrypt(&clearData, encryptedData);
                     ud->set_key(clearData.substr(0,6));
                 }
-                pqxx::binarystring bs(r2[i]["uname"]);
+                pqxx::binarystring bs(r2[0]["uname"]);
                 encryptedData =bs.str();
                 bf.Decrypt(&clearData, encryptedData);
                 ud->set_user(clearData);
-                pqxx::binarystring bsip(r2[i]["ip"]);
+                pqxx::binarystring bsip(r2[0]["ip"]);
                 encryptedData = bsip.str();
                 bf.Decrypt(&clearData, encryptedData);
                 ud->set_ip(clearData);
-                pqxx::binarystring bsport(r2[i]["port"]);
+                pqxx::binarystring bsport(r2[0]["port"]);
                 encryptedData =bsport.str();
                 bf.Decrypt(&clearData, encryptedData);
                 ud->set_port(clearData);
-                //time_t date = r2[i]["lastconnection"].as<time_t>();
+                //time_t date = r2[0]["lastconnection"].as<time_t>();
                 //TODO arreglar esto de la fecha
                 ud->set_date("");//+date);
             }
@@ -298,7 +306,7 @@ bool DBController::createInvitationConfirmation(rm::serverInvitationVerif invite
     bf.Encrypt(&encryptedData, invite.key());
     pqxx::binarystring key(encryptedData);
     pqxx::binarystring aux("");
-    result r = q.prepared("searchUnconfirmedInvitation")(invited)(inviting)("invitation confirmation")(invite.server()).exec();
+    result r = q.prepared("searchUnconfirmedInvitation")(inviting)(invited)("invitation confirmation")(invite.server()).exec();
     if(r.empty()){
         qDebug()<<"Añadida confirmación de invitación a DB invite de "+QString::fromStdString(invite.userinviting())+" a "+QString::fromStdString(invite.userinvited());
         LocalService ls;
@@ -308,7 +316,7 @@ bool DBController::createInvitationConfirmation(rm::serverInvitationVerif invite
             r = q.prepared("searchRemotefriendship")(inviting)(invited)(invite.server()).exec();
         }
         if(r.empty()){
-            result r1 = q.prepared("addUnconfirmedInvitation")(invite.server())("invitation confirmation")(ctime(&now))("")(invited)(inviting)(key)(true)(aux).exec();
+            result r1 = q.prepared("addUnconfirmedInvitation")(invite.server())("invitation confirmation")(ctime(&now))("")(inviting)(invited)(key)(true)(aux).exec();
             q.commit();
             return true;
         }else{
@@ -328,14 +336,14 @@ bool DBController::confirmSentInvitation(std::string localUser, rm::PersonalNew 
     pqxx::binarystring clocalUser(encryptedData);
     bf.Encrypt(&encryptedData, civ.internaldata());
     pqxx::binarystring ckey(encryptedData);
-    result r = q.prepared("searchUnconfirmedInvitation")(remoteUser)(clocalUser)("invitation confirmation")(civ.userserver()).exec();
+    result r = q.prepared("searchUnconfirmedInvitation")(clocalUser)(remoteUser)("invitation confirmation")(civ.userserver()).exec();
     if(!r.empty()){
         if(civ.response().compare("true")==0){
-            r = q.prepared("confirmInvitationSent")(remoteUser)(clocalUser)("invitation confirmation")(civ.userserver())(ckey).exec();
+            r = q.prepared("confirmInvitationSent")(clocalUser)(remoteUser)("invitation confirmation")(civ.userserver())(ckey).exec();
             q.commit();
             return true;
         }else{
-            r = q.prepared("deleteUnconfirmedInvitation")(remoteUser)(clocalUser)("invitation confirmation")(civ.userserver()).exec();
+            r = q.prepared("deleteUnconfirmedInvitation")(clocalUser)(remoteUser)("invitation confirmation")(civ.userserver()).exec();
             q.commit();
             return false;
         }
@@ -416,7 +424,7 @@ bool DBController::createFriendShip(rm::serverInvitationVerif invite){
     pqxx::binarystring userInvited(encryptedData);
     bf.Encrypt(&encryptedData, invite.key());
     pqxx::binarystring ckey(encryptedData);
-    result r = q.prepared("searchUnconfirmedInvitation")(userInvited)(userInviting)("invitation confirmation")(invite.server()).exec();
+    result r = q.prepared("searchUnconfirmedInvitation")(userInviting)(userInvited)("invitation confirmation")(invite.server()).exec();
     if(!r.empty()){
         LocalService ls;
         if(invite.server().compare(ls.getServerName().toUtf8().constData())==0){
@@ -427,7 +435,7 @@ bool DBController::createFriendShip(rm::serverInvitationVerif invite){
         }else{
             result r1 = q.prepared("newExternalFriend")(userInviting)(userInvited)(ckey)(invite.server()).exec();
         }
-        result r2 = q.prepared("deleteUnconfirmedInvitation")(userInvited)(userInviting)("invitation confirmation")(invite.server()).exec();
+        result r2 = q.prepared("deleteUnconfirmedInvitation")(userInviting)(userInvited)("invitation confirmation")(invite.server()).exec();
         q.commit();
         return true;
     }else{
@@ -447,9 +455,9 @@ void DBController::denyInvite(rm::serverInvitationVerif invite){
         r = q.prepared("deleteUnconfirmedInvitation")(invited)(inviting)("invitation")(invite.server()).exec();
         q.commit();
     }else{
-        result r1 = q.prepared("searchUnconfirmedInvitation")(invited)(inviting)("invitation confirmation")(invite.server()).exec();
+        result r1 = q.prepared("searchUnconfirmedInvitation")(inviting)(invited)("invitation confirmation")(invite.server()).exec();
         if(!r1.empty()){
-            r1 = q.prepared("deleteUnconfirmedInvitation")(invited)(inviting)("invitation confirmation")(invite.server()).exec();
+            r1 = q.prepared("deleteUnconfirmedInvitation")(inviting)(invited)("invitation confirmation")(invite.server()).exec();
             q.commit();
         }
     }
@@ -492,6 +500,127 @@ rm::UserDataBlock DBController::getExternalFriendList(rm::User userData, std::st
     return udb;
 }
 
+//********************
+// Room block
+//********************
+
+int DBController::roomRegister(rm::roomData rd){
+    work q(*conn);
+    std::string encrypted;
+    bf.Encrypt(&encrypted, rd.room());
+    pqxx::binarystring bsroom(encrypted);
+    bf.Encrypt(&encrypted, rd.user());
+    pqxx::binarystring bsuser(encrypted);
+    result r1 = q.prepared("testExistingRoom")(bsroom)(bsuser).exec();
+    if(r1.empty()){
+        bf.Encrypt(&encrypted, rd.pass());
+        pqxx::binarystring bspass(encrypted);
+        if(rd.permissions().compare("passprotected")==0){
+            bf.Encrypt(&encrypted, rd.accesspass());
+        }else {
+            encrypted = "";
+        }
+        pqxx::binarystring bsacesspass(encrypted);
+        result r2 =q.prepared("createChatRoom")(bsroom)(bsuser)(bspass)(rd.permissions())(bsacesspass).exec();
+        q.commit();
+        return 0;
+    }else{
+        q.abort();
+        return 1;
+    }
+}
+
+rm::roomData DBController::getRoomData(std::string roomName){
+    work q(*conn);
+    std::string encrypted, decrypted;
+    bf.Encrypt(&encrypted, roomName);
+    pqxx::binarystring bsroom(encrypted);
+    rm::roomData rd;
+    result r1 = q.prepared("getRoomData")(bsroom).exec();
+    if(!r1.empty()){
+        rd.set_room(roomName);
+        pqxx::binarystring bsUser(r1[0]["owner"]);
+        bf.Decrypt(&decrypted,bsUser.str());
+        rd.set_user(decrypted);
+        pqxx::binarystring bsPass(r1[0]["password"]);
+        bf.Decrypt(&decrypted,bsPass.str());
+        rd.set_pass(decrypted);
+        //bf.Decrypt(&decrypted,);
+        rd.set_permissions(r1[0]["permissions"].as<std::string>());
+        if(rd.permissions().compare("passprotected")==0){
+            pqxx::binarystring bsAccess(r1[0]["accesspass"]);
+            bf.Decrypt(&decrypted,bsAccess.str());
+            rd.set_accesspass(decrypted);
+        }
+    }else{
+        rd.set_room("");
+    }
+    return rd;
+}
+
+rm::roomData DBController::getUsersRoom(std::string uname){
+    work q(*conn);
+    std::string encrypted, decrypted;
+    bf.Encrypt(&encrypted, uname);
+    pqxx::binarystring bsUname(encrypted);
+    rm::roomData rd;
+    result r1 = q.prepared("getRoomByOwner")(bsUname).exec();
+    if(!r1.empty()){
+        rd.set_user(uname);
+        pqxx::binarystring bsRoom(r1[0]["roomname"]);
+        bf.Decrypt(&decrypted,bsRoom.str());
+        rd.set_room(decrypted);
+        pqxx::binarystring bsPass(r1[0]["password"]);
+        bf.Decrypt(&decrypted,bsPass.str());
+        rd.set_pass(decrypted);
+        bf.Decrypt(&decrypted,r1[0]["permissions"].as<std::string>());
+        rd.set_permissions(decrypted);
+        if(rd.permissions().compare("passprotected")==0){
+            pqxx::binarystring bsAccess(r1[0]["accesspass"]);
+            bf.Decrypt(&decrypted,bsAccess.str());
+            rd.set_accesspass(decrypted);
+        }
+    }else{
+        rd.set_room("");
+    }
+    return rd;
+}
+
+void DBController::removeUserRoom(rm::roomData rd){
+    work q(*conn);
+    std::string encryptedData;
+    bf.Encrypt(&encryptedData, rd.user());;
+    pqxx::binarystring uname(encryptedData);
+    bf.Encrypt(&encryptedData, rd.pass());
+    pqxx::binarystring password(encryptedData);;
+    result r=q.prepared("loginSearch")(uname)(password).exec();
+    if(!r.empty()){
+        result r1 = q.prepared("removeChatRoom")(uname).exec();
+        q.commit();
+    }
+}
+
+int DBController::claimRoom(rm::roomData rd){
+    work q(*conn);
+    std::string encryptedData;
+    bf.Encrypt(&encryptedData, rd.pass());
+    pqxx::binarystring bsPass(encryptedData);
+    bf.Encrypt(&encryptedData, rd.room());
+    pqxx::binarystring bsRoom(encryptedData);
+    bf.Encrypt(&encryptedData, rd.user());
+    pqxx::binarystring bsUname(encryptedData);
+    result r = q.prepared("findClaimedRoom")(bsRoom)(bsPass).exec();
+    if(!r.empty()){
+        result r1 =  q.prepared("claimRoom")(bsUname)(bsRoom)(bsPass).exec();
+        q.commit();
+        return 0;
+    }else{
+        return 1;
+    }
+
+}
+
+//testing
 void DBController::testDb(){
     std::string ta, tb, tc, td,ea,eb,ec,ed;
     work q(*conn);

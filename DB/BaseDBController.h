@@ -26,7 +26,13 @@ public:
     virtual bool createFriendShip(rm::serverInvitationVerif invite) =0;
     virtual void denyInvite(rm::serverInvitationVerif invite) =0;
     virtual rm::UserDataBlock getExternalFriendList(rm::User userData, std::string *key) = 0;
-
+    //chatRooms
+    virtual int roomRegister(rm::roomData rd) = 0;
+    virtual rm::roomData getRoomData(std::string roomName) = 0;
+    virtual rm::roomData getUsersRoom(std::string uname) = 0;
+    virtual void removeUserRoom(rm::roomData) = 0;
+    virtual int claimRoom(rm::roomData rd) = 0;
+    //testing purposes
     virtual void testDb() = 0;
 };
 

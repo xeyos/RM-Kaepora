@@ -57,11 +57,11 @@ void TcpRmPersonalNoticesAdmin::awake(std::string type, QByteArray byteArray){
                         state++;
                     }else{
                         qDebug()<<"Datos erroneos en verificación de cliente confirmando invite.";
-                        server->disconnected();
+                        server->closeConnection();
                     }
                 }else{
                     qDebug()<<"Datos erroneos en verificación de cliente confirmando invite.";
-                    server->disconnected();
+                    server->closeConnection();
                 }
                 break;
             }
@@ -141,6 +141,6 @@ void TcpRmPersonalNoticesAdmin::awake(std::string type, QByteArray byteArray){
             }
         }
     }catch(int i){
-        this->server->disconnected();
+        this->server->closeConnection();
     }
 }

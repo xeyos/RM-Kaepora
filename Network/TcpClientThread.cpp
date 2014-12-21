@@ -9,7 +9,7 @@ TcpClientThread::TcpClientThread(RsaKeys *k, CustomRsa *rsa, int type, QByteArra
 {
     this->destinatary = destinatary;
     this->type = type;
-    qDebug()<<"Creamos cliente de tipo "+this->type;
+    qDebug()<<"Creamos cliente de tipo "+QString::number(this->type);
     this->data = data;
     crsa = rsa;
     keys = k;
@@ -18,7 +18,7 @@ TcpClientThread::TcpClientThread(RsaKeys *k, CustomRsa *rsa, int type, QByteArra
 
 TcpClientThread::TcpClientThread(RsaKeys *k, CustomRsa *rsa, int type, QByteArray data){
     this->type = type;
-    qDebug()<<"Creamos cliente de tipo "+this->type;
+    qDebug()<<"Creamos cliente de tipo "+QString::number(this->type);
     this->data = data;
     crsa = rsa;
     keys = k;
@@ -36,6 +36,7 @@ void TcpClientThread::work(){
                 socket->abort();
                 connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()), Qt::DirectConnection);
                 connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+                connect(socket,SIGNAL(disconnected()),socket,SLOT(deleteLater()));
                 socket->connectToHost(QString::fromStdString(invite.server()),1432);
                 if(!socket->waitForConnected(5000)){
                     this->disconnected();
@@ -121,7 +122,5 @@ void TcpClientThread::disconnected(){
         delete (rmc);
         rmc = NULL;
     }
-    socket->deleteLater();
-    socket = NULL;
     emit finished();
 }

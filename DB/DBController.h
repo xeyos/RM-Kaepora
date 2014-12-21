@@ -25,8 +25,14 @@ public:
     bool createFriendShip(rm::serverInvitationVerif invite);
     void denyInvite(rm::serverInvitationVerif invite);
     rm::UserDataBlock getExternalFriendList(rm::User userData, std::string *key);
-
-   void testDb();
+    //ChatRoom
+    int roomRegister(rm::roomData rd);
+    rm::roomData getRoomData(std::string roomName);
+    rm::roomData getUsersRoom(std::string uname);
+    void removeUserRoom(rm::roomData);
+    int claimRoom(rm::roomData rd);
+    //testing purposes
+    void testDb();
 private:
     pqxx::connection *conn;
     BlowFish bf;

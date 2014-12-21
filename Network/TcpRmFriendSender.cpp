@@ -54,7 +54,7 @@ void TcpRmFriendSender::awake(std::string type, QByteArray byteArray){
             sr.set_description(encrypted);
             serialArray.append(sr.SerializeAsString().c_str(), sr.ByteSize());
             this->server->sendExternalMsg(serialArray);
-            server->disconnected();
+            server->closeConnection();
         }
     }else if(type.compare("012")==0){
         std::string decrypted, encrypted;
@@ -80,6 +80,6 @@ void TcpRmFriendSender::awake(std::string type, QByteArray byteArray){
                 server->sendExternalMsg(serialArray);
             }
         }
-        server->disconnected();
+        server->closeConnection();
     }
 }

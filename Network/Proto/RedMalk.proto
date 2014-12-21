@@ -82,6 +82,7 @@ message ServerStatus{
 	required bytes registeringStatus=1;
 	required bytes generalStatus=2;
 	required bytes avaliability=3;
+	optional bytes ip = 4;
 }
 
 message ServerResponse{
@@ -105,6 +106,15 @@ message chatAuth{
 message chatTextMsg{
 	required bytes user=1;
 	required bytes msg=2;
+}
+
+message roomData{
+	required bytes room=1;
+	required bytes user=2;
+	optional bytes server=3;
+	optional bytes pass=4;
+	optional bytes permissions=5;
+	optional bytes accessPass=6;
 }
 
 

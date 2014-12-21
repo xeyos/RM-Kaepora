@@ -64,11 +64,11 @@ void TcpRmLocalFriendServer::awake(std::string type, QByteArray byteArray){
                 server->sendExternalMsg(serialArray);
            }else{
                 qDebug()<<"Datos erroneos en solicitud de lista de amigos.";
-                server->disconnected();
+                server->closeConnection();
             }
         }else{
             qDebug()<<"Datos erroneos en solicitud de lista de amigos.";
-            server->disconnected();
+            server->closeConnection();
         }
     }catch(int e){
         qDebug("paquete incorrecto en solicitud de lista de amigos");

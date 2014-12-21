@@ -50,6 +50,7 @@ class ServerResponse;
 class RegisteringData;
 class chatAuth;
 class chatTextMsg;
+class roomData;
 
 // ===================================================================
 
@@ -1630,6 +1631,18 @@ class ServerStatus : public ::google::protobuf::Message {
   inline ::std::string* release_avaliability();
   inline void set_allocated_avaliability(::std::string* avaliability);
 
+  // optional bytes ip = 4;
+  inline bool has_ip() const;
+  inline void clear_ip();
+  static const int kIpFieldNumber = 4;
+  inline const ::std::string& ip() const;
+  inline void set_ip(const ::std::string& value);
+  inline void set_ip(const char* value);
+  inline void set_ip(const void* value, size_t size);
+  inline ::std::string* mutable_ip();
+  inline ::std::string* release_ip();
+  inline void set_allocated_ip(::std::string* ip);
+
   // @@protoc_insertion_point(class_scope:rm.ServerStatus)
  private:
   inline void set_has_registeringstatus();
@@ -1638,15 +1651,18 @@ class ServerStatus : public ::google::protobuf::Message {
   inline void clear_has_generalstatus();
   inline void set_has_avaliability();
   inline void clear_has_avaliability();
+  inline void set_has_ip();
+  inline void clear_has_ip();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* registeringstatus_;
   ::std::string* generalstatus_;
   ::std::string* avaliability_;
+  ::std::string* ip_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void  protobuf_AddDesc_RedMalk_2eproto();
   friend void protobuf_AssignDesc_RedMalk_2eproto();
@@ -2107,6 +2123,168 @@ class chatTextMsg : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static chatTextMsg* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class roomData : public ::google::protobuf::Message {
+ public:
+  roomData();
+  virtual ~roomData();
+
+  roomData(const roomData& from);
+
+  inline roomData& operator=(const roomData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const roomData& default_instance();
+
+  void Swap(roomData* other);
+
+  // implements Message ----------------------------------------------
+
+  roomData* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const roomData& from);
+  void MergeFrom(const roomData& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required bytes room = 1;
+  inline bool has_room() const;
+  inline void clear_room();
+  static const int kRoomFieldNumber = 1;
+  inline const ::std::string& room() const;
+  inline void set_room(const ::std::string& value);
+  inline void set_room(const char* value);
+  inline void set_room(const void* value, size_t size);
+  inline ::std::string* mutable_room();
+  inline ::std::string* release_room();
+  inline void set_allocated_room(::std::string* room);
+
+  // required bytes user = 2;
+  inline bool has_user() const;
+  inline void clear_user();
+  static const int kUserFieldNumber = 2;
+  inline const ::std::string& user() const;
+  inline void set_user(const ::std::string& value);
+  inline void set_user(const char* value);
+  inline void set_user(const void* value, size_t size);
+  inline ::std::string* mutable_user();
+  inline ::std::string* release_user();
+  inline void set_allocated_user(::std::string* user);
+
+  // optional bytes server = 3;
+  inline bool has_server() const;
+  inline void clear_server();
+  static const int kServerFieldNumber = 3;
+  inline const ::std::string& server() const;
+  inline void set_server(const ::std::string& value);
+  inline void set_server(const char* value);
+  inline void set_server(const void* value, size_t size);
+  inline ::std::string* mutable_server();
+  inline ::std::string* release_server();
+  inline void set_allocated_server(::std::string* server);
+
+  // optional bytes pass = 4;
+  inline bool has_pass() const;
+  inline void clear_pass();
+  static const int kPassFieldNumber = 4;
+  inline const ::std::string& pass() const;
+  inline void set_pass(const ::std::string& value);
+  inline void set_pass(const char* value);
+  inline void set_pass(const void* value, size_t size);
+  inline ::std::string* mutable_pass();
+  inline ::std::string* release_pass();
+  inline void set_allocated_pass(::std::string* pass);
+
+  // optional bytes permissions = 5;
+  inline bool has_permissions() const;
+  inline void clear_permissions();
+  static const int kPermissionsFieldNumber = 5;
+  inline const ::std::string& permissions() const;
+  inline void set_permissions(const ::std::string& value);
+  inline void set_permissions(const char* value);
+  inline void set_permissions(const void* value, size_t size);
+  inline ::std::string* mutable_permissions();
+  inline ::std::string* release_permissions();
+  inline void set_allocated_permissions(::std::string* permissions);
+
+  // optional bytes accessPass = 6;
+  inline bool has_accesspass() const;
+  inline void clear_accesspass();
+  static const int kAccessPassFieldNumber = 6;
+  inline const ::std::string& accesspass() const;
+  inline void set_accesspass(const ::std::string& value);
+  inline void set_accesspass(const char* value);
+  inline void set_accesspass(const void* value, size_t size);
+  inline ::std::string* mutable_accesspass();
+  inline ::std::string* release_accesspass();
+  inline void set_allocated_accesspass(::std::string* accesspass);
+
+  // @@protoc_insertion_point(class_scope:rm.roomData)
+ private:
+  inline void set_has_room();
+  inline void clear_has_room();
+  inline void set_has_user();
+  inline void clear_has_user();
+  inline void set_has_server();
+  inline void clear_has_server();
+  inline void set_has_pass();
+  inline void clear_has_pass();
+  inline void set_has_permissions();
+  inline void clear_has_permissions();
+  inline void set_has_accesspass();
+  inline void clear_has_accesspass();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::std::string* room_;
+  ::std::string* user_;
+  ::std::string* server_;
+  ::std::string* pass_;
+  ::std::string* permissions_;
+  ::std::string* accesspass_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+
+  friend void  protobuf_AddDesc_RedMalk_2eproto();
+  friend void protobuf_AssignDesc_RedMalk_2eproto();
+  friend void protobuf_ShutdownFile_RedMalk_2eproto();
+
+  void InitAsDefaultInstance();
+  static roomData* default_instance_;
 };
 // ===================================================================
 
@@ -5133,6 +5311,76 @@ inline void ServerStatus::set_allocated_avaliability(::std::string* avaliability
   }
 }
 
+// optional bytes ip = 4;
+inline bool ServerStatus::has_ip() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void ServerStatus::set_has_ip() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void ServerStatus::clear_has_ip() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void ServerStatus::clear_ip() {
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    ip_->clear();
+  }
+  clear_has_ip();
+}
+inline const ::std::string& ServerStatus::ip() const {
+  return *ip_;
+}
+inline void ServerStatus::set_ip(const ::std::string& value) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void ServerStatus::set_ip(const char* value) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(value);
+}
+inline void ServerStatus::set_ip(const void* value, size_t size) {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  ip_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* ServerStatus::mutable_ip() {
+  set_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    ip_ = new ::std::string;
+  }
+  return ip_;
+}
+inline ::std::string* ServerStatus::release_ip() {
+  clear_has_ip();
+  if (ip_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = ip_;
+    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void ServerStatus::set_allocated_ip(::std::string* ip) {
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    delete ip_;
+  }
+  if (ip) {
+    set_has_ip();
+    ip_ = ip;
+  } else {
+    clear_has_ip();
+    ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
 // -------------------------------------------------------------------
 
 // ServerResponse
@@ -5916,6 +6164,430 @@ inline void chatTextMsg::set_allocated_msg(::std::string* msg) {
   } else {
     clear_has_msg();
     msg_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// -------------------------------------------------------------------
+
+// roomData
+
+// required bytes room = 1;
+inline bool roomData::has_room() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void roomData::set_has_room() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void roomData::clear_has_room() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void roomData::clear_room() {
+  if (room_ != &::google::protobuf::internal::kEmptyString) {
+    room_->clear();
+  }
+  clear_has_room();
+}
+inline const ::std::string& roomData::room() const {
+  return *room_;
+}
+inline void roomData::set_room(const ::std::string& value) {
+  set_has_room();
+  if (room_ == &::google::protobuf::internal::kEmptyString) {
+    room_ = new ::std::string;
+  }
+  room_->assign(value);
+}
+inline void roomData::set_room(const char* value) {
+  set_has_room();
+  if (room_ == &::google::protobuf::internal::kEmptyString) {
+    room_ = new ::std::string;
+  }
+  room_->assign(value);
+}
+inline void roomData::set_room(const void* value, size_t size) {
+  set_has_room();
+  if (room_ == &::google::protobuf::internal::kEmptyString) {
+    room_ = new ::std::string;
+  }
+  room_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* roomData::mutable_room() {
+  set_has_room();
+  if (room_ == &::google::protobuf::internal::kEmptyString) {
+    room_ = new ::std::string;
+  }
+  return room_;
+}
+inline ::std::string* roomData::release_room() {
+  clear_has_room();
+  if (room_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = room_;
+    room_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void roomData::set_allocated_room(::std::string* room) {
+  if (room_ != &::google::protobuf::internal::kEmptyString) {
+    delete room_;
+  }
+  if (room) {
+    set_has_room();
+    room_ = room;
+  } else {
+    clear_has_room();
+    room_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// required bytes user = 2;
+inline bool roomData::has_user() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void roomData::set_has_user() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void roomData::clear_has_user() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void roomData::clear_user() {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    user_->clear();
+  }
+  clear_has_user();
+}
+inline const ::std::string& roomData::user() const {
+  return *user_;
+}
+inline void roomData::set_user(const ::std::string& value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void roomData::set_user(const char* value) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(value);
+}
+inline void roomData::set_user(const void* value, size_t size) {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  user_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* roomData::mutable_user() {
+  set_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    user_ = new ::std::string;
+  }
+  return user_;
+}
+inline ::std::string* roomData::release_user() {
+  clear_has_user();
+  if (user_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = user_;
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void roomData::set_allocated_user(::std::string* user) {
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    delete user_;
+  }
+  if (user) {
+    set_has_user();
+    user_ = user;
+  } else {
+    clear_has_user();
+    user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional bytes server = 3;
+inline bool roomData::has_server() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void roomData::set_has_server() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void roomData::clear_has_server() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void roomData::clear_server() {
+  if (server_ != &::google::protobuf::internal::kEmptyString) {
+    server_->clear();
+  }
+  clear_has_server();
+}
+inline const ::std::string& roomData::server() const {
+  return *server_;
+}
+inline void roomData::set_server(const ::std::string& value) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(value);
+}
+inline void roomData::set_server(const char* value) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(value);
+}
+inline void roomData::set_server(const void* value, size_t size) {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  server_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* roomData::mutable_server() {
+  set_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    server_ = new ::std::string;
+  }
+  return server_;
+}
+inline ::std::string* roomData::release_server() {
+  clear_has_server();
+  if (server_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = server_;
+    server_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void roomData::set_allocated_server(::std::string* server) {
+  if (server_ != &::google::protobuf::internal::kEmptyString) {
+    delete server_;
+  }
+  if (server) {
+    set_has_server();
+    server_ = server;
+  } else {
+    clear_has_server();
+    server_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional bytes pass = 4;
+inline bool roomData::has_pass() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void roomData::set_has_pass() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void roomData::clear_has_pass() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void roomData::clear_pass() {
+  if (pass_ != &::google::protobuf::internal::kEmptyString) {
+    pass_->clear();
+  }
+  clear_has_pass();
+}
+inline const ::std::string& roomData::pass() const {
+  return *pass_;
+}
+inline void roomData::set_pass(const ::std::string& value) {
+  set_has_pass();
+  if (pass_ == &::google::protobuf::internal::kEmptyString) {
+    pass_ = new ::std::string;
+  }
+  pass_->assign(value);
+}
+inline void roomData::set_pass(const char* value) {
+  set_has_pass();
+  if (pass_ == &::google::protobuf::internal::kEmptyString) {
+    pass_ = new ::std::string;
+  }
+  pass_->assign(value);
+}
+inline void roomData::set_pass(const void* value, size_t size) {
+  set_has_pass();
+  if (pass_ == &::google::protobuf::internal::kEmptyString) {
+    pass_ = new ::std::string;
+  }
+  pass_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* roomData::mutable_pass() {
+  set_has_pass();
+  if (pass_ == &::google::protobuf::internal::kEmptyString) {
+    pass_ = new ::std::string;
+  }
+  return pass_;
+}
+inline ::std::string* roomData::release_pass() {
+  clear_has_pass();
+  if (pass_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = pass_;
+    pass_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void roomData::set_allocated_pass(::std::string* pass) {
+  if (pass_ != &::google::protobuf::internal::kEmptyString) {
+    delete pass_;
+  }
+  if (pass) {
+    set_has_pass();
+    pass_ = pass;
+  } else {
+    clear_has_pass();
+    pass_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional bytes permissions = 5;
+inline bool roomData::has_permissions() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void roomData::set_has_permissions() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void roomData::clear_has_permissions() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void roomData::clear_permissions() {
+  if (permissions_ != &::google::protobuf::internal::kEmptyString) {
+    permissions_->clear();
+  }
+  clear_has_permissions();
+}
+inline const ::std::string& roomData::permissions() const {
+  return *permissions_;
+}
+inline void roomData::set_permissions(const ::std::string& value) {
+  set_has_permissions();
+  if (permissions_ == &::google::protobuf::internal::kEmptyString) {
+    permissions_ = new ::std::string;
+  }
+  permissions_->assign(value);
+}
+inline void roomData::set_permissions(const char* value) {
+  set_has_permissions();
+  if (permissions_ == &::google::protobuf::internal::kEmptyString) {
+    permissions_ = new ::std::string;
+  }
+  permissions_->assign(value);
+}
+inline void roomData::set_permissions(const void* value, size_t size) {
+  set_has_permissions();
+  if (permissions_ == &::google::protobuf::internal::kEmptyString) {
+    permissions_ = new ::std::string;
+  }
+  permissions_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* roomData::mutable_permissions() {
+  set_has_permissions();
+  if (permissions_ == &::google::protobuf::internal::kEmptyString) {
+    permissions_ = new ::std::string;
+  }
+  return permissions_;
+}
+inline ::std::string* roomData::release_permissions() {
+  clear_has_permissions();
+  if (permissions_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = permissions_;
+    permissions_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void roomData::set_allocated_permissions(::std::string* permissions) {
+  if (permissions_ != &::google::protobuf::internal::kEmptyString) {
+    delete permissions_;
+  }
+  if (permissions) {
+    set_has_permissions();
+    permissions_ = permissions;
+  } else {
+    clear_has_permissions();
+    permissions_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional bytes accessPass = 6;
+inline bool roomData::has_accesspass() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void roomData::set_has_accesspass() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void roomData::clear_has_accesspass() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void roomData::clear_accesspass() {
+  if (accesspass_ != &::google::protobuf::internal::kEmptyString) {
+    accesspass_->clear();
+  }
+  clear_has_accesspass();
+}
+inline const ::std::string& roomData::accesspass() const {
+  return *accesspass_;
+}
+inline void roomData::set_accesspass(const ::std::string& value) {
+  set_has_accesspass();
+  if (accesspass_ == &::google::protobuf::internal::kEmptyString) {
+    accesspass_ = new ::std::string;
+  }
+  accesspass_->assign(value);
+}
+inline void roomData::set_accesspass(const char* value) {
+  set_has_accesspass();
+  if (accesspass_ == &::google::protobuf::internal::kEmptyString) {
+    accesspass_ = new ::std::string;
+  }
+  accesspass_->assign(value);
+}
+inline void roomData::set_accesspass(const void* value, size_t size) {
+  set_has_accesspass();
+  if (accesspass_ == &::google::protobuf::internal::kEmptyString) {
+    accesspass_ = new ::std::string;
+  }
+  accesspass_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* roomData::mutable_accesspass() {
+  set_has_accesspass();
+  if (accesspass_ == &::google::protobuf::internal::kEmptyString) {
+    accesspass_ = new ::std::string;
+  }
+  return accesspass_;
+}
+inline ::std::string* roomData::release_accesspass() {
+  clear_has_accesspass();
+  if (accesspass_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = accesspass_;
+    accesspass_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void roomData::set_allocated_accesspass(::std::string* accesspass) {
+  if (accesspass_ != &::google::protobuf::internal::kEmptyString) {
+    delete accesspass_;
+  }
+  if (accesspass) {
+    set_has_accesspass();
+    accesspass_ = accesspass;
+  } else {
+    clear_has_accesspass();
+    accesspass_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 

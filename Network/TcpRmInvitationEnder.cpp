@@ -55,7 +55,7 @@ void TcpRmInvitationEnder::awake(std::string type, QByteArray byteArray){
             serialArray.append(pn.SerializeAsString().c_str(),pn.ByteSize());
             server->changeState(6, serialArray, QString::fromStdString(siv.userinvited()));
         }else{
-            server->disconnected();
+            server->closeConnection();
         }
     }else{
         db->denyInvite(siv);

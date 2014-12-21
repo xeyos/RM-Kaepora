@@ -54,7 +54,7 @@ void TcpRmInvitationResponser::awake(std::string type, QByteArray byteArray){
         if (db->createFriendShip(siv)){
             server->changeState(6, serialArray, QString::fromStdString(siv.userinviting()));
         }else{
-            server->disconnected();
+            server->closeConnection();
         }
     }else{
         db->denyInvite(siv);

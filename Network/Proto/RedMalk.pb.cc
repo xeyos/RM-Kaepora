@@ -71,6 +71,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* chatTextMsg_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   chatTextMsg_reflection_ = NULL;
+const ::google::protobuf::Descriptor* roomData_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  roomData_reflection_ = NULL;
 
 }  // namespace
 
@@ -292,10 +295,11 @@ void protobuf_AssignDesc_RedMalk_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(User));
   ServerStatus_descriptor_ = file->message_type(12);
-  static const int ServerStatus_offsets_[3] = {
+  static const int ServerStatus_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerStatus, registeringstatus_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerStatus, generalstatus_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerStatus, avaliability_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerStatus, ip_),
   };
   ServerStatus_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -375,6 +379,26 @@ void protobuf_AssignDesc_RedMalk_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(chatTextMsg));
+  roomData_descriptor_ = file->message_type(17);
+  static const int roomData_offsets_[6] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(roomData, room_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(roomData, user_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(roomData, server_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(roomData, pass_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(roomData, permissions_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(roomData, accesspass_),
+  };
+  roomData_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      roomData_descriptor_,
+      roomData::default_instance_,
+      roomData_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(roomData, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(roomData, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(roomData));
 }
 
 namespace {
@@ -421,6 +445,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
     chatAuth_descriptor_, &chatAuth::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     chatTextMsg_descriptor_, &chatTextMsg::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    roomData_descriptor_, &roomData::default_instance());
 }
 
 }  // namespace
@@ -461,6 +487,8 @@ void protobuf_ShutdownFile_RedMalk_2eproto() {
   delete chatAuth_reflection_;
   delete chatTextMsg::default_instance_;
   delete chatTextMsg_reflection_;
+  delete roomData::default_instance_;
+  delete roomData_reflection_;
 }
 
 void protobuf_AddDesc_RedMalk_2eproto() {
@@ -493,15 +521,18 @@ void protobuf_AddDesc_RedMalk_2eproto() {
     "erDataBlock\022!\n\013localFriend\030\001 \003(\0132\014.rm.Us"
     "erData\022,\n\016externalFriend\030\002 \003(\0132\024.rm.Exte"
     "rnalUserData\">\n\004User\022\014\n\004user\030\001 \002(\014\022\016\n\006se"
-    "rver\030\002 \002(\014\022\n\n\002ip\030\003 \001(\014\022\014\n\004port\030\004 \001(\014\"V\n\014"
+    "rver\030\002 \002(\014\022\n\n\002ip\030\003 \001(\014\022\014\n\004port\030\004 \001(\014\"b\n\014"
     "ServerStatus\022\031\n\021registeringStatus\030\001 \002(\014\022"
     "\025\n\rgeneralStatus\030\002 \002(\014\022\024\n\014avaliability\030\003"
-    " \002(\014\"3\n\016ServerResponse\022\014\n\004code\030\001 \002(\014\022\023\n\013"
-    "description\030\002 \001(\014\"A\n\017RegisteringData\022\r\n\005"
-    "uname\030\001 \002(\014\022\r\n\005email\030\002 \002(\014\022\020\n\010password\030\003"
-    " \002(\014\"E\n\010chatAuth\022\014\n\004user\030\001 \002(\014\022\016\n\006server"
-    "\030\002 \002(\014\022\013\n\003key\030\003 \001(\014\022\016\n\006keyAlt\030\004 \001(\014\"(\n\013c"
-    "hatTextMsg\022\014\n\004user\030\001 \002(\014\022\013\n\003msg\030\002 \002(\014", 1277);
+    " \002(\014\022\n\n\002ip\030\004 \001(\014\"3\n\016ServerResponse\022\014\n\004co"
+    "de\030\001 \002(\014\022\023\n\013description\030\002 \001(\014\"A\n\017Registe"
+    "ringData\022\r\n\005uname\030\001 \002(\014\022\r\n\005email\030\002 \002(\014\022\020"
+    "\n\010password\030\003 \002(\014\"E\n\010chatAuth\022\014\n\004user\030\001 \002"
+    "(\014\022\016\n\006server\030\002 \002(\014\022\013\n\003key\030\003 \001(\014\022\016\n\006keyAl"
+    "t\030\004 \001(\014\"(\n\013chatTextMsg\022\014\n\004user\030\001 \002(\014\022\013\n\003"
+    "msg\030\002 \002(\014\"m\n\010roomData\022\014\n\004room\030\001 \002(\014\022\014\n\004u"
+    "ser\030\002 \002(\014\022\016\n\006server\030\003 \001(\014\022\014\n\004pass\030\004 \001(\014\022"
+    "\023\n\013permissions\030\005 \001(\014\022\022\n\naccessPass\030\006 \001(\014", 1400);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "RedMalk.proto", &protobuf_RegisterTypes);
   VersionPackage::default_instance_ = new VersionPackage();
@@ -523,6 +554,7 @@ void protobuf_AddDesc_RedMalk_2eproto() {
   RegisteringData::default_instance_ = new RegisteringData();
   chatAuth::default_instance_ = new chatAuth();
   chatTextMsg::default_instance_ = new chatTextMsg();
+  roomData::default_instance_ = new roomData();
   VersionPackage::default_instance_->InitAsDefaultInstance();
   Notice::default_instance_->InitAsDefaultInstance();
   News::default_instance_->InitAsDefaultInstance();
@@ -540,6 +572,7 @@ void protobuf_AddDesc_RedMalk_2eproto() {
   RegisteringData::default_instance_->InitAsDefaultInstance();
   chatAuth::default_instance_->InitAsDefaultInstance();
   chatTextMsg::default_instance_->InitAsDefaultInstance();
+  roomData::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_RedMalk_2eproto);
 }
 
@@ -4563,6 +4596,7 @@ void User::Swap(User* other) {
 const int ServerStatus::kRegisteringStatusFieldNumber;
 const int ServerStatus::kGeneralStatusFieldNumber;
 const int ServerStatus::kAvaliabilityFieldNumber;
+const int ServerStatus::kIpFieldNumber;
 #endif  // !_MSC_VER
 
 ServerStatus::ServerStatus()
@@ -4584,6 +4618,7 @@ void ServerStatus::SharedCtor() {
   registeringstatus_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   generalstatus_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   avaliability_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  ip_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -4600,6 +4635,9 @@ void ServerStatus::SharedDtor() {
   }
   if (avaliability_ != &::google::protobuf::internal::kEmptyString) {
     delete avaliability_;
+  }
+  if (ip_ != &::google::protobuf::internal::kEmptyString) {
+    delete ip_;
   }
   if (this != default_instance_) {
   }
@@ -4641,6 +4679,11 @@ void ServerStatus::Clear() {
     if (has_avaliability()) {
       if (avaliability_ != &::google::protobuf::internal::kEmptyString) {
         avaliability_->clear();
+      }
+    }
+    if (has_ip()) {
+      if (ip_ != &::google::protobuf::internal::kEmptyString) {
+        ip_->clear();
       }
     }
   }
@@ -4691,6 +4734,20 @@ bool ServerStatus::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(34)) goto parse_ip;
+        break;
+      }
+
+      // optional bytes ip = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_ip:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_ip()));
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -4731,6 +4788,12 @@ void ServerStatus::SerializeWithCachedSizes(
       3, this->avaliability(), output);
   }
 
+  // optional bytes ip = 4;
+  if (has_ip()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
+      4, this->ip(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -4758,6 +4821,13 @@ void ServerStatus::SerializeWithCachedSizes(
     target =
       ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         3, this->avaliability(), target);
+  }
+
+  // optional bytes ip = 4;
+  if (has_ip()) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        4, this->ip(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -4790,6 +4860,13 @@ int ServerStatus::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->avaliability());
+    }
+
+    // optional bytes ip = 4;
+    if (has_ip()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->ip());
     }
 
   }
@@ -4828,6 +4905,9 @@ void ServerStatus::MergeFrom(const ServerStatus& from) {
     if (from.has_avaliability()) {
       set_avaliability(from.avaliability());
     }
+    if (from.has_ip()) {
+      set_ip(from.ip());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -4855,6 +4935,7 @@ void ServerStatus::Swap(ServerStatus* other) {
     std::swap(registeringstatus_, other->registeringstatus_);
     std::swap(generalstatus_, other->generalstatus_);
     std::swap(avaliability_, other->avaliability_);
+    std::swap(ip_, other->ip_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -6070,6 +6151,463 @@ void chatTextMsg::Swap(chatTextMsg* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = chatTextMsg_descriptor_;
   metadata.reflection = chatTextMsg_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int roomData::kRoomFieldNumber;
+const int roomData::kUserFieldNumber;
+const int roomData::kServerFieldNumber;
+const int roomData::kPassFieldNumber;
+const int roomData::kPermissionsFieldNumber;
+const int roomData::kAccessPassFieldNumber;
+#endif  // !_MSC_VER
+
+roomData::roomData()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void roomData::InitAsDefaultInstance() {
+}
+
+roomData::roomData(const roomData& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void roomData::SharedCtor() {
+  _cached_size_ = 0;
+  room_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  user_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  server_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  pass_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  permissions_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  accesspass_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+roomData::~roomData() {
+  SharedDtor();
+}
+
+void roomData::SharedDtor() {
+  if (room_ != &::google::protobuf::internal::kEmptyString) {
+    delete room_;
+  }
+  if (user_ != &::google::protobuf::internal::kEmptyString) {
+    delete user_;
+  }
+  if (server_ != &::google::protobuf::internal::kEmptyString) {
+    delete server_;
+  }
+  if (pass_ != &::google::protobuf::internal::kEmptyString) {
+    delete pass_;
+  }
+  if (permissions_ != &::google::protobuf::internal::kEmptyString) {
+    delete permissions_;
+  }
+  if (accesspass_ != &::google::protobuf::internal::kEmptyString) {
+    delete accesspass_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+void roomData::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* roomData::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return roomData_descriptor_;
+}
+
+const roomData& roomData::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_RedMalk_2eproto();
+  return *default_instance_;
+}
+
+roomData* roomData::default_instance_ = NULL;
+
+roomData* roomData::New() const {
+  return new roomData;
+}
+
+void roomData::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (has_room()) {
+      if (room_ != &::google::protobuf::internal::kEmptyString) {
+        room_->clear();
+      }
+    }
+    if (has_user()) {
+      if (user_ != &::google::protobuf::internal::kEmptyString) {
+        user_->clear();
+      }
+    }
+    if (has_server()) {
+      if (server_ != &::google::protobuf::internal::kEmptyString) {
+        server_->clear();
+      }
+    }
+    if (has_pass()) {
+      if (pass_ != &::google::protobuf::internal::kEmptyString) {
+        pass_->clear();
+      }
+    }
+    if (has_permissions()) {
+      if (permissions_ != &::google::protobuf::internal::kEmptyString) {
+        permissions_->clear();
+      }
+    }
+    if (has_accesspass()) {
+      if (accesspass_ != &::google::protobuf::internal::kEmptyString) {
+        accesspass_->clear();
+      }
+    }
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool roomData::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required bytes room = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_room()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_user;
+        break;
+      }
+
+      // required bytes user = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_user:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_user()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(26)) goto parse_server;
+        break;
+      }
+
+      // optional bytes server = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_server:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_server()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(34)) goto parse_pass;
+        break;
+      }
+
+      // optional bytes pass = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_pass:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_pass()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(42)) goto parse_permissions;
+        break;
+      }
+
+      // optional bytes permissions = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_permissions:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_permissions()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(50)) goto parse_accessPass;
+        break;
+      }
+
+      // optional bytes accessPass = 6;
+      case 6: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_accessPass:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_accesspass()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void roomData::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // required bytes room = 1;
+  if (has_room()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
+      1, this->room(), output);
+  }
+
+  // required bytes user = 2;
+  if (has_user()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
+      2, this->user(), output);
+  }
+
+  // optional bytes server = 3;
+  if (has_server()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
+      3, this->server(), output);
+  }
+
+  // optional bytes pass = 4;
+  if (has_pass()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
+      4, this->pass(), output);
+  }
+
+  // optional bytes permissions = 5;
+  if (has_permissions()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
+      5, this->permissions(), output);
+  }
+
+  // optional bytes accessPass = 6;
+  if (has_accesspass()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
+      6, this->accesspass(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* roomData::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required bytes room = 1;
+  if (has_room()) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        1, this->room(), target);
+  }
+
+  // required bytes user = 2;
+  if (has_user()) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        2, this->user(), target);
+  }
+
+  // optional bytes server = 3;
+  if (has_server()) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        3, this->server(), target);
+  }
+
+  // optional bytes pass = 4;
+  if (has_pass()) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        4, this->pass(), target);
+  }
+
+  // optional bytes permissions = 5;
+  if (has_permissions()) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        5, this->permissions(), target);
+  }
+
+  // optional bytes accessPass = 6;
+  if (has_accesspass()) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        6, this->accesspass(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int roomData::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required bytes room = 1;
+    if (has_room()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->room());
+    }
+
+    // required bytes user = 2;
+    if (has_user()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->user());
+    }
+
+    // optional bytes server = 3;
+    if (has_server()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->server());
+    }
+
+    // optional bytes pass = 4;
+    if (has_pass()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->pass());
+    }
+
+    // optional bytes permissions = 5;
+    if (has_permissions()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->permissions());
+    }
+
+    // optional bytes accessPass = 6;
+    if (has_accesspass()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
+          this->accesspass());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void roomData::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const roomData* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const roomData*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void roomData::MergeFrom(const roomData& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_room()) {
+      set_room(from.room());
+    }
+    if (from.has_user()) {
+      set_user(from.user());
+    }
+    if (from.has_server()) {
+      set_server(from.server());
+    }
+    if (from.has_pass()) {
+      set_pass(from.pass());
+    }
+    if (from.has_permissions()) {
+      set_permissions(from.permissions());
+    }
+    if (from.has_accesspass()) {
+      set_accesspass(from.accesspass());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void roomData::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void roomData::CopyFrom(const roomData& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool roomData::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+
+  return true;
+}
+
+void roomData::Swap(roomData* other) {
+  if (other != this) {
+    std::swap(room_, other->room_);
+    std::swap(user_, other->user_);
+    std::swap(server_, other->server_);
+    std::swap(pass_, other->pass_);
+    std::swap(permissions_, other->permissions_);
+    std::swap(accesspass_, other->accesspass_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata roomData::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = roomData_descriptor_;
+  metadata.reflection = roomData_reflection_;
   return metadata;
 }
 

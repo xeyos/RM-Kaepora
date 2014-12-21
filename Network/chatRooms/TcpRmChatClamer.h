@@ -1,14 +1,14 @@
-#ifndef TCPRMCHATREMOVER_H
-#define TCPRMCHATREMOVER_H
+#ifndef TCPRMCHATCLAMER_H
+#define TCPRMCHATCLAMER_H
 #include "Network/TcpServerThread.h"
 #include "Network/TcpRmStatus.h"
 #include "Security/BlowFish.h"
 #include "RedMalk.pb.h"
 
-class TcpRmChatRemover: public TcpRmStatus
+class TcpRmChatClamer: public TcpRmStatus
 {
 public:
-    TcpRmChatRemover();
+    TcpRmChatClamer();
     void setSocket(TcpServerThread *server, BlowFish *bf);
     void awake(std::string type, QByteArray byteArray);
 
@@ -16,6 +16,8 @@ private:
     TcpServerThread *server;
     BlowFish *bf;
     int state;
+    std::string userAsking;
+    std::string localUser;
 };
 
-#endif // TCPRMCHATREMOVER_H
+#endif // TCPRMCHATCLAMER_H

@@ -13,6 +13,7 @@ public:
 protected:
     bool checkUname(std::string aux);
     bool checkPassword(std::string aux);
+    bool checkShortPassword(std::string aux);
 
 protected:
     TcpServerThread *server;

@@ -41,7 +41,11 @@ SOURCES += main.cpp \
     Network/TcpRmInvitationResponser.cpp \
     Network/TcpRmPNSender.cpp \
     Network/TcpRmFriendSender.cpp \
-    Network/TcpRmLocalFriendServer.cpp
+    Network/TcpRmLocalFriendServer.cpp \
+    Network/chatRooms/TcpRmChatRegisterer.cpp \
+    Network/chatRooms/TcpRmChatResponser.cpp \
+    Network/chatRooms/TcpRmChatRemover.cpp \
+    Network/chatRooms/TcpRmChatClamer.cpp
 
 HEADERS  += \
     Network/TcpServer.h \
@@ -73,7 +77,11 @@ HEADERS  += \
     Network/TcpRmInvitationResponser.h \
     Network/TcpRmPNSender.h \
     Network/TcpRmFriendSender.h \
-    Network/TcpRmLocalFriendServer.h
+    Network/TcpRmLocalFriendServer.h \
+    Network/chatRooms/TcpRmChatRegisterer.h \
+    Network/chatRooms/TcpRmChatResponser.h \
+    Network/chatRooms/TcpRmChatRemover.h \
+    Network/chatRooms/TcpRmChatClamer.h
 
 FORMS    += \
     UI/MainWindow.ui \
@@ -93,4 +101,7 @@ unix:!macx: LIBS += -L$$PWD/../../../../../usr/local/lib/ -lpq
 INCLUDEPATH += $$PWD/../../../../../usr/local/include/pqxx
 DEPENDPATH += $$PWD/../../../../../usr/local/include/pqxx
 
-unix:!macx: PRE_TARGETDEPS += $$PWD/../../../../../usr/local/lib/libpqxx.a
+#unix:!macx: PRE_TARGETDEPS += $$PWD/../../../../../usr/local/lib/libpqxx.a
+
+unix: CONFIG += link_pkgconfig
+unix: PKGCONFIG += libpqxx

@@ -24,6 +24,7 @@ public:
     QString getClientIp();
     void closeConnection();
     void blockThread(bool value);
+    void sendStatus();
 
 private:
     std::string getNetworkString();

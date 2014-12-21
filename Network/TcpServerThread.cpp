@@ -12,6 +12,10 @@
 #include "TcpRmInvitationResponser.h"
 #include "TcpRmLocalFriendServer.h"
 #include "TcpRmFriendSender.h"
+#include "chatRooms/TcpRmChatResponser.h"
+#include "chatRooms/TcpRmChatRegisterer.h"
+#include "chatRooms/TcpRmChatRemover.h"
+#include "chatRooms/TcpRmChatClamer.h"
 
 using namespace rm;
 
@@ -35,6 +39,7 @@ void TcpServerThread::work()
     }
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()), Qt::DirectConnection);
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
+    connect(socket,SIGNAL(disconnected()),socket,SLOT(deleteLater()));
     //Nada más crear el socket, enviamos al cliente nuestra clave RSA pública para
     //evitar pasar ningún tipo de información sin cifrar.
     QString aux = QString::number(keys->n)+" "+QString::number(keys->e);
@@ -155,6 +160,34 @@ void TcpServerThread::readyRead()
                     rm->setSocket(this, bf);
                     break;
                 }
+                case 12:{
+                    qDebug()<<"Solicitud de creación de sala de chat pública";
+                    state=2;
+                    rm = new TcpRmChatRegisterer();
+                    rm->setSocket(this, bf);
+                    break;
+                }
+                case 13:{
+                    qDebug()<<"Solicitud de datos de sala";
+                    state=2;
+                    rm = new TcpRmChatResponser();
+                    rm->setSocket(this, bf);
+                    break;
+                }
+                case 16:{
+                    qDebug()<<"Solicitud de eliminación de sala";
+                    state=2;
+                    rm = new TcpRmChatRemover();
+                    rm->setSocket(this, bf);
+                    break;
+                }
+                case 17:{
+                    qDebug()<<"Reclamo de sala";
+                    state = 2;
+                    rm = new TcpRmChatClamer();
+                    rm->setSocket(this, bf);
+                    break;
+                }
                 default:{
                     socket->disconnectFromHost();
                     qDebug()<<"Número de operación erroneo";
@@ -228,9 +261,22 @@ void TcpServerThread::disconnected()
         delete(rm);
         rm = NULL;
     }
-    socket->deleteLater();
-    socket = NULL;
     if (!this->blocked){
         emit finished();
     }
+}
+
+void TcpServerThread::sendStatus(){
+    rm::ServerStatus sStatus;
+    std::string cypheredMsg;
+    bf->Encrypt(&cypheredMsg, std::string()+(char)getServerMode());
+    sStatus.set_registeringstatus(cypheredMsg);
+    bf->Encrypt(&cypheredMsg, std::string()+(char)100);
+    sStatus.set_avaliability(cypheredMsg);
+    bf->Encrypt(&cypheredMsg, "Ready to serve");
+    sStatus.set_generalstatus(cypheredMsg);
+    QByteArray sendArray;
+    sendArray.append("011");
+    sendArray.append(sStatus.SerializeAsString().c_str(),sStatus.ByteSize());
+    sendExternalMsg(sendArray);
 }

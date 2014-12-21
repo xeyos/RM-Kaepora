@@ -28,16 +28,6 @@ void MainWindow::setPassword(QString p){
     BlowFish bf;
     bf.SetKey(pass.toUtf8().constData());
     if(iSettings){
-/*
-if (iSettings.bad()) {
-    // IO error
-} else if (!iSettings.eof()) {
-    // format error (not possible with getline but possible with operator>>)
-} else {
-    // format error (not possible with getline but possible with operator>>)
-    // or end of file (can't make the difference)
-}
-*/
         try{
             std::string acum="";
             int count = 0, prevCount = 0;
@@ -90,14 +80,6 @@ if (iSettings.bad()) {
                     acum = "";
                 }
             }
-            /*
-            if (iSettings.bad()) {
-                qDebug()<<"ioError";
-            } else if (!iSettings.eof()) {
-                qDebug()<<"Neof";
-            } else {
-                qDebug()<<"eof";
-            }*/
             DBFactory dbfactory;
             if (dbfactory.getDB()->setAccessData(db.toUtf8().constData(), user.toUtf8().constData(), password.toUtf8().constData(), ip.toUtf8().constData(), port.toUtf8().constData())) {
                 palette.setColor(QPalette::WindowText, Qt::green);
