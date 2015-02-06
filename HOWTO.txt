@@ -1,0 +1,16 @@
+To compile this code you will need:
+ -QT v5.2 or higher (i usually handle the project with QTCreator 3) 
+
+In addition you will need to compile and add the next libraries:
+ -For Linux:
+	-Install postgreSQL from repository (postgresql and postgresql-contrib)
+	-Install instal libpqxx from repository (libpqxx-dev)
+	-Install Alsa from repository (libasound2-dev)
+	-Compile Google Protocol Buffers and set:
+		-libprotobuf.a at RM-Kaepora/Network/Proto
+		-The headers at RM-Kaepora/Network/Proto/google/protobuf , respecting its folder structure.
+Finally you can find at Kaepora/DB a file named KaeporaDB wich is an empty database backup generated with pgadmin3 so you dont need to recreate the entire DB structure.
+
+With this you should be able to compile and execute the software, please, share your thoughts!
+
+NOTE: At the settings window (first use) the last field (server name) is the server location (ip or domain, whatever you use) so he can recognice himself.

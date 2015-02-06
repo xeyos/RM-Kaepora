@@ -136,8 +136,8 @@ rm::PersonalNews DBController::getPersonalNews(rm::Auth auth){
             rm::PersonalNew *pn = pns.add_personalnew();
             pqxx::binarystring bs(r1[i]["message"]);
             pqxx::binarystring owner(r1[i]["owner"]);
-            pqxx::binarystring internalData(r1[i]["internaldata"]);
-            pqxx::binarystring internalDataAux(r1[i]["internaldataaux"]);
+            pqxx::binarystring internalData(r1[i]["internaldataaux"]);
+            pqxx::binarystring internalDataAux(r1[i]["internaldata"]);
             bf.Decrypt(&clear, bs.str());
             pn->set_content(clear);
             bf.Decrypt(&clear, internalData.str());
